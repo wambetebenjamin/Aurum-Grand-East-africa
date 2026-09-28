@@ -10,7 +10,8 @@ Pure HTML / CSS / ES modules. No framework, no bundler, no build step.
 | Path | What it is |
 | --- | --- |
 | `index.html` | The entire site — markup, design system, router, and the WebGL engine |
-| `assets/img/` | Photography (hero suite, suites, amenities, dining, spa, events) |
+| `assets/img/` | Photography — hero suite, seven suites, six amenities, eight menu dishes,
+ spa, events, bar and exterior (18 images, ~4.7 MB) |
 
 ## Run it
 

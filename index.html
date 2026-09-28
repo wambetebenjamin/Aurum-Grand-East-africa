@@ -679,19 +679,30 @@ select.av-sel{
 .tab.on{background:linear-gradient(135deg,#D4AF37,#8B6914);color:#140e05;border-color:transparent;font-weight:500;}
 .menu-list{display:grid;gap:10px;}
 .menu-card{
-  display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;
+  display:grid;grid-template-columns:54px 1fr auto;gap:16px;align-items:center;
   padding:16px 20px;border-radius:16px;
   background:rgba(245,230,200,.045);border:1px solid rgba(212,175,55,.13);
   backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
   transition:.6s var(--ease);
 }
 .menu-card:hover{background:rgba(245,230,200,.09);border-color:var(--line-strong);transform:translateX(6px);}
-.menu-card .medal{
-  width:44px;height:44px;border-radius:50%;flex:0 0 auto;
-  background:radial-gradient(circle at 34% 28%,#F5E6C8,#D4AF37 42%,#8B6914 100%);
-  box-shadow:inset 0 1px 2px rgba(255,255,255,.55),0 8px 18px -10px rgba(0,0,0,.9);
-  display:grid;place-items:center;font-family:var(--font-serif);font-size:15px;color:#140e05;
+.menu-card .pic{
+  width:54px;height:54px;border-radius:50%;flex:0 0 auto;overflow:hidden;
+  border:1px solid rgba(212,175,55,.45);
+  box-shadow:inset 0 1px 2px rgba(255,255,255,.35),0 10px 22px -12px rgba(0,0,0,.95);
 }
+.menu-card .pic img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform 1.3s var(--ease);filter:saturate(.92) contrast(1.05);
+}
+.menu-card:hover .pic img{transform:scale(1.16);}
+.menu-note{
+  padding:20px 22px;border-radius:20px;margin-bottom:18px;
+  border:1px dashed rgba(212,175,55,.38);background:rgba(212,175,55,.055);
+  display:flex;flex-direction:column;align-items:flex-start;gap:9px;
+}
+.menu-note p{margin:0;font-size:13.5px;line-height:1.6;color:var(--cream-dim);max-width:52ch;}
+.menu-note .btn-ghost{padding:9px 17px;font-size:10px;}
 .menu-card h4{margin:0;font-family:var(--font-display);font-weight:600;font-size:15px;letter-spacing:.01em;}
 .menu-card p{margin:3px 0 0;font-size:12.5px;color:var(--cream-dim);line-height:1.45;}
 .menu-card .price{font-family:var(--font-serif);font-size:20px;color:var(--gold);white-space:nowrap;}
@@ -1136,6 +1147,11 @@ footer#foot{background:#0a0805;position:relative;z-index:4;padding-top:clamp(60p
   .scroll-hint{display:none;}
   .tier{grid-template-columns:88px 1fr;}
   .tier .thumb{width:88px;height:88px;}
+}
+@media (max-width:520px){
+  .menu-card{grid-template-columns:44px 1fr;gap:12px;}
+  .menu-card .pic{width:44px;height:44px;}
+  .menu-card .price{grid-column:2;}
 }
 @media (max-width:620px){
   .form .two{grid-template-columns:1fr;}
@@ -1601,7 +1617,10 @@ const SUITES = [
     price:'KSh 980,000', desc:'The whole forty-eighth floor: a private infinity pool, screening room, and a chef’s kitchen that opens at midnight.' },
   { id:'cabana', name:'Poolside Cabana Suite', img:`${IMG}/pool-deck.jpg`, tag:'Poolside',
     size:'95 sqm', floor:'Level 6 · Deck', view:'Pool deck & palms', beds:'1 King · sun deck',
-    price:'KSh 198,000', desc:'Step straight from your linen sheets into the warm lap pool, with a shaded deck and outdoor rain shower.' }
+    price:'KSh 198,000', desc:'Step straight from your linen sheets into the warm lap pool, with a shaded deck and outdoor rain shower.' },
+  { id:'skyline', name:'Skyline Corner Suite', img:`${IMG}/room-5.jpg`, tag:'Corner',
+    size:'135 sqm', floor:'44th Floor', view:'Twin aspect skyline', beds:'1 King · reading nook',
+    price:'KSh 292,000', desc:'Glass on two sides where the tower turns, with a suspended reading nook above the city lights.' }
 ];
 
 const AMENITIES = [
@@ -1615,28 +1634,20 @@ const AMENITIES = [
 
 const MENU = {
   starters:[
-    { n:'Oyster Trio, Gold Mignonette', d:'Coastal oysters, champagne shallot, gold leaf', p:'4,800' },
-    { n:'Torched Wagyu Tartare', d:'Hand-cut, smoked egg yolk, brioche crisp', p:'6,200' },
-    { n:'Roasted Bone Marrow', d:'Gremolata, sea salt, sourdough soldiers', p:'4,100' },
-    { n:'Heirloom Tomato & Burrata', d:'Basil oil, aged balsamic, pine nut crumb', p:'3,600' }
+    { n:'Oyster Trio, Gold Mignonette', d:'Coastal oysters, champagne shallot, gold leaf', p:'4,800', img:'dish-starter-1' },
+    { n:'Torched Wagyu Tartare', d:'Hand-cut, smoked egg yolk, brioche crisp', p:'6,200', img:'dish-starter-2' }
   ],
   mains:[
-    { n:'Dry-Aged Ribeye, 45 Days', d:'Charcoal, bone marrow jus, triple-cooked chips', p:'11,900' },
-    { n:'Line-Caught Red Snapper', d:'Saffron velouté, fennel, citrus beurre blanc', p:'8,400' },
-    { n:'Spiced Lamb Shoulder', d:'Slow-roast 12 hours, aubergine, harissa honey', p:'9,600' },
-    { n:'Wild Mushroom Risotto', d:'Aged parmesan, truffle, thyme oil', p:'6,900' }
+    { n:'Dry-Aged Ribeye, 45 Days', d:'Charcoal, bone marrow jus, triple-cooked chips', p:'11,900', img:'dish-main-1' },
+    { n:'Line-Caught Red Snapper', d:'Saffron velouté, fennel, citrus beurre blanc', p:'8,400', img:'dish-main-2' }
   ],
   desserts:[
-    { n:'Gold Leaf Chocolate Sphere', d:'Valrhona 70%, hazelnut praline, gold', p:'3,900' },
-    { n:'Vanilla Bean Soufflé', d:'Madagascar vanilla, crème anglaise', p:'3,400' },
-    { n:'Pistachio & Rose Millefeuille', d:'Caramelised pastry, rose cream', p:'3,200' },
-    { n:'Champagne Granita', d:'Vintage brut, elderflower, gold sugar', p:'2,800' }
+    { n:'Gold Leaf Chocolate Sphere', d:'Valrhona 70%, hazelnut praline, gold', p:'3,900', img:'dish-dessert-1' },
+    { n:'Pistachio & Rose Millefeuille', d:'Caramelised pastry, rose cream', p:'3,200', img:'dish-dessert-2' }
   ],
   cellar:[
-    { n:'Vintage Brut, 2012', d:'Champagne · France · by the glass', p:'5,400' },
-    { n:'Barolo Riserva, 2010', d:'Nebbiolo · Piedmont · bottle', p:'48,000' },
-    { n:'Kenyan Highlands Chardonnay', d:'Naivasha · bottle', p:'14,500' },
-    { n:'Aurum Reserve Cocktail', d:'Gold-infused cognac, honey, bitters', p:'3,900' }
+    { n:'Vintage Brut, 2012', d:'Champagne · France · by the glass', p:'5,400', img:'dish-cellar-1' },
+    { n:'Barolo Riserva, 2010', d:'Nebbiolo · Piedmont · bottle', p:'48,000', img:'dish-cellar-2' }
   ]
 };
 
@@ -2043,7 +2054,7 @@ const PAGES = {
         <div class="wrap">
           <div class="sec-head">
             <div><span class="eyebrow" data-reveal>[ ${t('roomsEyebrow')} ]</span>
-              <h2 data-reveal>Six ways <em>to stay</em></h2></div>
+              <h2 data-reveal>Seven ways <em>to stay</em></h2></div>
             ${availCard()}
           </div>
           <div class="suites">${SUITES.map(suiteCard).join('')}</div>
@@ -2063,7 +2074,7 @@ const PAGES = {
 
       <section class="pad" style="padding-top:0">
         <div class="wrap split">
-          <div class="frame" data-reveal><img src="${IMG}/room-3.jpg" alt="Royal Garden Residence" loading="lazy"></div>
+          <div class="frame" data-reveal><img src="${IMG}/room-6.jpg" alt="Marble bath, AURUM GRAND" loading="lazy"></div>
           <div>
             <span class="eyebrow" data-reveal>[ Residences ]</span>
             <h2 data-reveal style="font-family:var(--font-display);font-weight:900;font-size:clamp(30px,4.6vw,60px);line-height:.94;letter-spacing:-.03em;margin:14px 0 0">
@@ -2331,14 +2342,20 @@ function menuTabs(scope){
   const tabs = cats.map((c,i) => `<button class="tab${i===0?' on':''}" data-tab="${c}" data-scope="${scope}">${labels[i]}</button>`).join('');
   const lists = cats.map((c,i) => `
     <div class="menu-list" data-panel="${c}" data-scope="${scope}" style="${i===0?'':'display:none'}">
-      ${MENU[c].map((m,j) => `
+      ${MENU[c].map(m => `
         <div class="menu-card">
-          <div class="medal">${'I'.repeat(Math.min(j+1,3))}</div>
+          <div class="pic"><img src="${IMG}/${m.img}.jpg" alt="${m.n}" loading="lazy" decoding="async"></div>
           <div><h4>${m.n}</h4><p>${m.d}</p></div>
           <div class="price">KSh ${m.p}</div>
         </div>`).join('')}
     </div>`).join('');
-  return `<div data-reveal><div class="tabs">${tabs}</div>${lists}</div>`;
+  const note = `
+    <div class="menu-note">
+      <span class="eyebrow no-rule">[ Chef's counter ]</span>
+      <p>Nine courses, ten seats, poured with vintage brut and Kenyan Highlands wines. Served from 19:00.</p>
+      <button class="btn btn-ghost" data-wa="dining" data-venue="Chef's Counter">Reserve the counter</button>
+    </div>`;
+  return `<div data-reveal>${note}<div class="tabs">${tabs}</div>${lists}</div>`;
 }
 
 /* ============================================================
