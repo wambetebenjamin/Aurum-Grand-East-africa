@@ -381,6 +381,9 @@ section{position:relative;}
 @media (prefers-reduced-motion:reduce){
   [data-reveal]{opacity:1!important;transform:none!important;filter:none!important;transition:none!important;}
   html{scroll-behavior:auto;}
+  .marquee .track,.ticker .track,#grain,.bell,.loader-mark .star,
+  #waFab .fab-btn::after,#waFab .fab-btn::before,.orb::after{animation:none!important;}
+  .orb::after{opacity:.35;}
 }
 
 /* ============================================================
@@ -1160,8 +1163,8 @@ footer#foot{background:#0a0805;position:relative;z-index:4;padding-top:clamp(60p
   <div class="layer l2" id="bgL2"></div>
   <div class="layer l3" id="bgL3"></div>
 </div>
-<div id="grain" aria-hidden="true"></div>
 <div id="photoLayer" aria-hidden="true"><img id="photoLayerImg" src="" alt=""><div class="photo-veil"></div></div>
+<div id="grain" aria-hidden="true"></div>
 <canvas id="scene" aria-hidden="true"></canvas>
 <div id="vignette" aria-hidden="true"></div>
 
