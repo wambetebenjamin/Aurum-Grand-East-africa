@@ -62,6 +62,15 @@ main{z-index:2}
 footer{background-image:url('https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=2400&q=90');background-color:#4b382d;background-attachment:scroll}
 .amenities .section-head,.dining>div,.testimonials h2,.quote,.footer-top,.footer-links,.copyright{ text-shadow:0 2px 14px rgba(0,0,0,.62)}
 .ticker{background-image:url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1800&q=80');background-color:#80503d}
+
+/* Guaranteed content visibility */
+.loader{animation:automaticLoader 4s ease forwards;animation-delay:1.5s}
+@keyframes automaticLoader{0%,75%{opacity:1;visibility:visible}100%{opacity:0;visibility:hidden;pointer-events:none}}
+.reveal{opacity:1!important;visibility:visible!important;filter:none!important;transform:none!important}
+.hero h1,.hero p,.hero .eyebrow{color:#fff!important}.hero .outline-btn,.hero .ghost-btn{color:#fff!important}
+.section,.section-title,.feature-room h3,.stat strong,.stat span{color:#29241f!important}.section .kicker{color:#9a4f36!important}
+.amenities,.amenities h2,.amenities h3,.amenities p,.amenities .kicker{color:#fff!important}.dining,.dining h2,.dining h4,.dining p,.dining .kicker,.dining .tab{color:#fff!important}.testimonials,.testimonials h2,.testimonials p,.testimonials small{color:#fff!important}footer,footer h2,footer h4,footer a,footer span{color:#fff!important}
+.dish{color:#fff!important}.dish b{color:#f1b79d!important}
 </style>
 </head>
 <body>
