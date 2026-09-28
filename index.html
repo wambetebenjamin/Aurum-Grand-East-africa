@@ -1,0 +1,3681 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="obsidian">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>AURUM GRAND — Where every moment is golden.</title>
+<meta name="description" content="AURUM GRAND — 124 suites. One singular address. A five-star sanctuary of gold light, quiet marble and world-class service." />
+<meta name="theme-color" content="#0a0805" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' fill='%230a0805'/%3E%3Cpath d='M2.5 7.5l3.6 3.1L12 4l5.9 6.6 3.6-3.1-1.9 11.4H4.4L2.5 7.5z' fill='none' stroke='%23D4AF37' stroke-width='1.4' stroke-linejoin='round'/%3E%3C/svg%3E" />
+<meta property="og:title" content="AURUM GRAND — Where every moment is golden." />
+<meta property="og:description" content="124 suites. One singular address." />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.161.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.161.0/examples/jsm/"
+  }
+}
+</script>
+
+<style>
+/* ============================================================
+   AURUM GRAND — design system
+   Palette: #8B6914 deep gold · #1a1208 obsidian · #F5E6C8 pearl cream
+            #2C1810 dark mahogany · #D4AF37 gold leaf
+   ============================================================ */
+:root{
+  --gold:#D4AF37;
+  --gold-deep:#8B6914;
+  --gold-soft:#E7C86A;
+  --obsidian:#1a1208;
+  --obsidian-ink:#0a0805;
+  --mahogany:#2C1810;
+  --cream:#F5E6C8;
+  --cream-dim:rgba(245,230,200,.62);
+  --cream-faint:rgba(245,230,200,.34);
+  --line:rgba(212,175,55,.15);
+  --line-strong:rgba(212,175,55,.34);
+  --glass:rgba(26,18,8,.55);
+  --glass-2:rgba(20,14,6,.72);
+
+  --font-display:'Raleway', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-serif:'Cormorant Garamond', 'Times New Roman', Times, serif;
+  --font-mono:'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace;
+
+  --header-h:84px;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --reveal-dur:1.8s;
+
+  /* live palette (morphs with scroll + theme switcher) */
+  --sphere:#D4AF37;
+  --sphere-2:#F5E6C8;
+  --bg-1:#1a1208;
+  --bg-2:#2c1810;
+  --bg-3:#0d0a05;
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+body{
+  background:var(--obsidian-ink);
+  color:var(--cream);
+  font-family:var(--font-display);
+  font-weight:300;
+  font-size:16px;
+  line-height:1.6;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+body.is-loading{overflow:hidden;}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+button,input,select,textarea{font:inherit;color:inherit;}
+::selection{background:rgba(212,175,55,.32);color:#fff;}
+
+/* thin gold scrollbar */
+::-webkit-scrollbar{width:9px;height:9px;}
+::-webkit-scrollbar-track{background:#0a0805;}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--gold),var(--gold-deep));border-radius:9px;}
+
+/* ---------- typography primitives ---------- */
+.eyebrow{
+  font-family:var(--font-mono);
+  font-size:11px;
+  font-weight:400;
+  letter-spacing:.34em;
+  text-transform:uppercase;
+  color:var(--gold);
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+}
+.eyebrow::before{
+  content:"";width:26px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold));
+}
+.eyebrow.no-rule::before{display:none;}
+
+.display{
+  font-family:var(--font-display);
+  font-weight:900;
+  line-height:.88;
+  letter-spacing:-.03em;
+  color:var(--cream);
+  margin:0;
+}
+.serif{font-family:var(--font-serif);font-weight:300;letter-spacing:.01em;}
+.lede{font-size:18px;font-weight:500;color:var(--cream-dim);line-height:1.55;margin:0;}
+.muted{color:var(--cream-dim);}
+
+/* ---------- background (palette morphing) ---------- */
+#bg{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:#0a0805;
+}
+#bg .layer{
+  position:absolute;inset:0;
+  transition:opacity 1.2s linear;
+  will-change:opacity;
+}
+#bg .l1{background:radial-gradient(circle at center, #1a1208 0%, #2c1810 40%, #0d0a05 100%);opacity:1;}
+#bg .l2{background:radial-gradient(circle at center, #1a1208 0%, #3d2a05 40%, #D4AF37 100%);opacity:0;}
+#bg .l3{background:radial-gradient(circle at center, #0a0a0a 0%, #1a1208 50%, #8B6914 100%);opacity:0;}
+#bg::after{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(120% 80% at 50% 110%, rgba(0,0,0,.75) 0%, transparent 60%),
+    radial-gradient(90% 60% at 50% -10%, rgba(0,0,0,.55) 0%, transparent 60%);
+}
+#grain{
+  position:fixed;inset:-50%;z-index:1;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/></filter><rect width='140' height='140' filter='url(%23n)' opacity='.55'/></svg>");
+  animation:grain 8s steps(6) infinite;
+}
+@keyframes grain{
+  0%{transform:translate(0,0)}20%{transform:translate(-3%,2%)}40%{transform:translate(2%,-3%)}
+  60%{transform:translate(-2%,-2%)}80%{transform:translate(3%,1%)}100%{transform:translate(0,0)}
+}
+
+/* ---------- photographic backdrop (under the 3D scene) ---------- */
+#photoLayer{
+  position:fixed;inset:0;z-index:1;pointer-events:none;opacity:0;overflow:hidden;
+  transition:opacity .9s linear;
+}
+#photoLayer img{
+  width:100%;height:100%;object-fit:cover;
+  filter:saturate(.86) contrast(1.06) brightness(.66);
+  transform:scale(1.05);
+}
+#photoLayer .photo-veil{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(180deg, rgba(10,8,5,.78) 0%, rgba(10,8,5,.30) 34%, rgba(10,8,5,.94) 100%),
+    radial-gradient(92% 74% at 16% 84%, rgba(10,8,5,.94), transparent 70%);
+}
+
+/* ---------- 3D canvas ---------- */
+#scene{
+  position:fixed;inset:0;z-index:2;pointer-events:none;
+}
+#scene canvas{display:block;width:100%;height:100%;}
+#vignette{
+  position:fixed;inset:0;z-index:3;pointer-events:none;
+  background:radial-gradient(75% 65% at 50% 45%, transparent 40%, rgba(6,4,2,.62) 100%);
+}
+
+/* ============================================================
+   LOADER
+   ============================================================ */
+#loader{
+  position:fixed;inset:0;z-index:200;
+  background:radial-gradient(circle at 50% 45%, #17100a 0%, #0a0805 70%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:34px;transition:opacity .9s var(--ease), visibility .9s;
+}
+#loader.done{opacity:0;visibility:hidden;}
+.bell{width:74px;height:74px;position:relative;animation:bell-swing 2.4s var(--ease) infinite;}
+.bell svg{width:100%;height:100%;overflow:visible;}
+@keyframes bell-swing{
+  0%,100%{transform:rotate(-9deg);}
+  50%{transform:rotate(9deg);}
+}
+.bell .ring{transform-origin:50% 14%;animation:bell-ring .55s cubic-bezier(.36,.07,.19,.97) infinite;}
+@keyframes bell-ring{
+  0%,70%,100%{transform:rotate(0)}
+  76%{transform:rotate(6deg)}82%{transform:rotate(-6deg)}88%{transform:rotate(3deg)}
+}
+.bell .halo{
+  position:absolute;inset:-30%;border-radius:50%;
+  background:radial-gradient(circle, rgba(212,175,55,.22) 0%, transparent 62%);
+  animation:halo 2.6s ease-in-out infinite;
+}
+@keyframes halo{0%,100%{opacity:.35;transform:scale(.9)}50%{opacity:.9;transform:scale(1.06)}}
+
+.loader-mark{
+  font-family:var(--font-serif);
+  font-size:clamp(26px,4.4vw,46px);
+  letter-spacing:.24em;
+  color:var(--gold);
+  text-transform:uppercase;
+  display:flex;align-items:center;gap:14px;
+  text-shadow:0 0 34px rgba(212,175,55,.32);
+}
+.loader-mark .thin{font-family:var(--font-display);font-weight:200;letter-spacing:.42em;}
+.loader-mark .heavy{font-family:var(--font-display);font-weight:900;letter-spacing:.16em;}
+.loader-mark .star{font-size:.6em;opacity:.85;animation:twinkle 2.2s ease-in-out infinite;}
+@keyframes twinkle{0%,100%{opacity:.4;transform:scale(.9)}50%{opacity:1;transform:scale(1.12)}}
+
+.loader-bar{
+  width:min(340px,64vw);height:2px;background:rgba(212,175,55,.14);
+  border-radius:2px;overflow:hidden;
+}
+.loader-bar span{
+  display:block;height:100%;width:0%;
+  background:linear-gradient(90deg,#8B6914,#D4AF37 45%,#F5E6C8 60%,#D4AF37 75%,#8B6914);
+  box-shadow:0 0 14px rgba(212,175,55,.6);
+  transition:width .5s var(--ease);
+}
+.loader-step{
+  font-family:var(--font-mono);font-size:10.5px;letter-spacing:.3em;
+  text-transform:uppercase;color:rgba(245,230,200,.5);min-height:14px;
+  transition:opacity .35s ease;
+}
+.loader-pct{
+  font-family:var(--font-mono);font-size:10px;letter-spacing:.24em;
+  color:rgba(212,175,55,.7);
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+header#top{
+  position:fixed;top:0;left:0;right:0;z-index:60;
+  height:var(--header-h);
+  display:flex;align-items:center;
+  padding:0 clamp(16px,3vw,40px);
+  background:rgba(10,8,5,.001);
+  backdrop-filter:blur(16px) saturate(1.25);
+  -webkit-backdrop-filter:blur(16px) saturate(1.25);
+  border-bottom:1px solid rgba(212,175,55,.15);
+  transition:background .5s ease, border-color .5s ease, height .5s var(--ease);
+}
+header#top.solid{
+  background:rgba(10,8,5,.62);
+  border-bottom:1px solid rgba(212,175,55,.24);
+  height:70px;
+}
+.brand{display:flex;align-items:center;gap:12px;flex:0 0 auto;}
+.brand .crown{width:26px;height:26px;color:var(--gold);flex:0 0 auto;}
+.brand .crown svg{width:100%;height:100%;display:block;}
+.brand .mark{display:flex;align-items:baseline;gap:7px;line-height:1;}
+.brand .aurum{
+  font-family:var(--font-display);font-weight:200;letter-spacing:.36em;
+  font-size:16px;color:var(--gold);
+}
+.brand .grand{
+  font-family:var(--font-display);font-weight:900;letter-spacing:.1em;
+  font-size:16px;color:var(--gold);
+}
+.brand:hover .crown{animation:crown-tilt 1.1s var(--ease);}
+@keyframes crown-tilt{0%,100%{transform:rotate(0) translateY(0)}40%{transform:rotate(-8deg) translateY(-3px)}}
+
+nav.main{margin-left:auto;display:flex;align-items:center;gap:clamp(14px,2vw,30px);}
+nav.main a{
+  font-size:12px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(245,230,200,.72);position:relative;padding:6px 0;transition:color .35s ease;
+}
+nav.main a::after{
+  content:"";position:absolute;left:0;bottom:0;height:1px;width:0;
+  background:linear-gradient(90deg,var(--gold),transparent);
+  transition:width .5s var(--ease);
+}
+nav.main a:hover{color:var(--cream);}
+nav.main a:hover::after,nav.main a.active::after{width:100%;}
+nav.main a.active{color:var(--gold);}
+
+.head-right{display:flex;align-items:center;gap:14px;margin-left:clamp(14px,2vw,30px);}
+.lang{
+  display:flex;align-items:center;gap:7px;
+  padding:7px 13px;border-radius:999px;
+  border:1px solid rgba(212,175,55,.24);
+  background:rgba(26,18,8,.5);
+  font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;
+  color:var(--cream-dim);cursor:pointer;position:relative;
+  transition:border-color .35s ease,color .35s ease;
+}
+.lang:hover{border-color:var(--line-strong);color:var(--cream);}
+.lang .globe{width:13px;height:13px;opacity:.8;}
+.lang-menu{
+  position:absolute;top:calc(100% + 10px);right:0;
+  background:rgba(10,8,5,.94);border:1px solid var(--line);
+  border-radius:14px;padding:7px;min-width:150px;
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  opacity:0;visibility:hidden;transform:translateY(-6px);
+  transition:.35s var(--ease);z-index:20;
+}
+.lang.open .lang-menu{opacity:1;visibility:visible;transform:translateY(0);}
+.lang-menu button{
+  display:flex;width:100%;align-items:center;justify-content:space-between;gap:10px;
+  background:none;border:0;padding:9px 11px;border-radius:9px;cursor:pointer;
+  font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;
+  color:var(--cream-dim);transition:background .25s ease,color .25s ease;
+}
+.lang-menu button:hover{background:rgba(212,175,55,.12);color:var(--gold);}
+.lang-menu button.on{color:var(--gold);}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  border:0;cursor:pointer;white-space:nowrap;
+  font-family:var(--font-display);font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;
+  transition:transform .45s var(--ease), box-shadow .45s var(--ease), background .35s ease, color .35s ease, border-color .35s ease;
+}
+.btn-gold{
+  padding:12px 24px;border-radius:999px;font-size:11.5px;color:#140e05;
+  background:linear-gradient(135deg,#F5E6C8 0%,#D4AF37 42%,#8B6914 100%);
+  box-shadow:0 10px 30px -12px rgba(212,175,55,.7), inset 0 1px 0 rgba(255,255,255,.5);
+}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 18px 44px -14px rgba(212,175,55,.85), inset 0 1px 0 rgba(255,255,255,.6);}
+.btn-outline{
+  padding:13px 26px;border-radius:999px;font-size:11.5px;color:var(--cream);
+  background:rgba(212,175,55,.04);
+  border:1px solid var(--line-strong);
+}
+.btn-outline:hover{background:rgba(212,175,55,.14);border-color:var(--gold);transform:translateY(-2px);}
+.btn-ghost{
+  padding:13px 24px;border-radius:999px;font-size:11.5px;color:var(--cream-dim);
+  background:transparent;border:1px solid rgba(245,230,200,.16);
+}
+.btn-ghost:hover{color:var(--cream);border-color:rgba(245,230,200,.4);transform:translateY(-2px);}
+.btn .arw{transition:transform .45s var(--ease);}
+.btn:hover .arw{transform:translateX(5px);}
+
+.burger{display:none;width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:rgba(26,18,8,.5);cursor:pointer;align-items:center;justify-content:center;flex-direction:column;gap:4px;}
+.burger i{display:block;width:16px;height:1px;background:var(--gold);transition:.4s var(--ease);}
+.burger.on i:nth-child(1){transform:translateY(5px) rotate(45deg);}
+.burger.on i:nth-child(2){opacity:0;}
+.burger.on i:nth-child(3){transform:translateY(-5px) rotate(-45deg);}
+
+/* mobile menu */
+#mobileNav{
+  position:fixed;inset:0;z-index:55;
+  background:rgba(6,4,2,.96);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+  opacity:0;visibility:hidden;transition:.55s var(--ease);
+}
+#mobileNav.on{opacity:1;visibility:visible;}
+#mobileNav a{
+  font-family:var(--font-serif);font-size:clamp(30px,8vw,54px);font-weight:300;
+  color:var(--cream);padding:6px 0;transition:color .3s ease,letter-spacing .5s var(--ease);
+}
+#mobileNav a:hover{color:var(--gold);letter-spacing:.03em;}
+
+/* ============================================================
+   PAGE SHELL
+   ============================================================ */
+main#app{position:relative;z-index:4;}
+.page{min-height:100vh;}
+section{position:relative;}
+.wrap{width:min(1440px,92vw);margin-inline:auto;}
+.wrap-narrow{width:min(1080px,90vw);margin-inline:auto;}
+.pad{padding-block:clamp(80px,11vh,150px);}
+
+/* ---------- reveal ---------- */
+[data-reveal]{
+  opacity:0;transform:translateY(52px);filter:blur(12px);
+  transition:opacity var(--reveal-dur) var(--ease),
+             transform var(--reveal-dur) var(--ease),
+             filter var(--reveal-dur) var(--ease);
+  transition-delay:var(--d,0s);
+  will-change:opacity,transform,filter;
+}
+[data-reveal].in{opacity:1;transform:none;filter:blur(0);}
+@media (prefers-reduced-motion:reduce){
+  [data-reveal]{opacity:1!important;transform:none!important;filter:none!important;transition:none!important;}
+  html{scroll-behavior:auto;}
+}
+
+/* ============================================================
+   HERO (HOME)
+   ============================================================ */
+.hero{
+  min-height:100svh;position:relative;display:flex;flex-direction:column;
+  justify-content:flex-end;padding:calc(var(--header-h) + 40px) clamp(16px,3vw,40px) clamp(34px,5vh,60px);
+}
+.hero-grid{
+  width:min(1440px,100%);margin-inline:auto;
+  display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);
+  gap:clamp(24px,4vw,70px);align-items:flex-end;
+}
+.hero h1{
+  font-family:var(--font-display);font-weight:900;
+  font-size:clamp(52px,8.4vw,110px);line-height:.86;letter-spacing:-.035em;
+  color:var(--cream);margin:18px 0 0;
+  text-shadow:0 22px 70px rgba(0,0,0,.65);
+}
+.hero h1 em{
+  font-family:var(--font-serif);font-weight:300;font-style:italic;
+  letter-spacing:-.01em;
+}
+.hero .sub{max-width:30ch;margin-top:22px;font-size:18px;font-weight:500;color:var(--cream-dim);}
+.hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px;}
+.hero-meta{
+  display:flex;gap:clamp(18px,3vw,42px);margin-top:44px;flex-wrap:wrap;
+  padding-top:22px;border-top:1px solid rgba(212,175,55,.16);
+}
+.hero-meta div{min-width:88px;}
+.hero-meta b{
+  display:block;font-family:var(--font-display);font-weight:800;font-size:24px;
+  color:var(--gold);letter-spacing:-.01em;
+}
+.hero-meta span{
+  font-family:var(--font-mono);font-size:9.5px;letter-spacing:.26em;
+  text-transform:uppercase;color:rgba(245,230,200,.42);
+}
+
+/* availability widget */
+.avail{
+  background:var(--glass-2);
+  border:1px solid var(--line);
+  border-radius:22px;padding:22px;
+  backdrop-filter:blur(22px) saturate(1.3);-webkit-backdrop-filter:blur(22px) saturate(1.3);
+  box-shadow:0 40px 90px -40px rgba(0,0,0,.9), inset 0 1px 0 rgba(245,230,200,.07);
+}
+.avail h4{
+  margin:0 0 16px;font-family:var(--font-mono);font-size:10px;font-weight:400;
+  letter-spacing:.3em;text-transform:uppercase;color:var(--gold);
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+}
+.avail h4 i{
+  width:7px;height:7px;border-radius:50%;background:#50C878;
+  box-shadow:0 0 0 0 rgba(80,200,120,.6);animation:pulse-dot 2.4s infinite;
+}
+@keyframes pulse-dot{
+  0%{box-shadow:0 0 0 0 rgba(80,200,120,.55)}
+  70%{box-shadow:0 0 0 9px rgba(80,200,120,0)}
+  100%{box-shadow:0 0 0 0 rgba(80,200,120,0)}
+}
+.avail .row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.avail .field{position:relative;}
+.avail label{
+  display:block;font-family:var(--font-mono);font-size:9px;letter-spacing:.24em;
+  text-transform:uppercase;color:rgba(245,230,200,.4);margin-bottom:6px;
+}
+.avail input,.avail select{
+  width:100%;padding:12px 13px;border-radius:12px;
+  background:rgba(10,8,5,.6);border:1px solid rgba(212,175,55,.18);
+  color:var(--cream);font-size:14px;font-weight:400;
+  transition:border-color .35s ease,background .35s ease;
+  appearance:none;-webkit-appearance:none;
+}
+select.av-sel{
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='7' viewBox='0 0 10 7'><path d='M1 1l4 4 4-4' stroke='%23D4AF37' stroke-width='1.2' fill='none' stroke-linecap='round'/></svg>");
+  background-repeat:no-repeat;background-position:right 13px center;padding-right:32px;
+}
+.avail input:focus,.avail select:focus{outline:none;border-color:var(--gold);background:rgba(10,8,5,.85);}
+.avail input::-webkit-calendar-picker-indicator{filter:invert(72%) sepia(60%) saturate(600%) hue-rotate(2deg);cursor:pointer;opacity:.7;}
+.avail .btn-gold{width:100%;margin-top:14px;padding:15px 24px;}
+.avail .fineprint{
+  margin-top:12px;font-family:var(--font-mono);font-size:9px;letter-spacing:.16em;
+  text-transform:uppercase;color:rgba(245,230,200,.34);text-align:center;
+}
+.avail .full{grid-column:1/-1;}
+
+.scroll-hint{
+  position:absolute;left:50%;bottom:14px;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  font-family:var(--font-mono);font-size:9px;letter-spacing:.3em;text-transform:uppercase;
+  color:rgba(245,230,200,.35);
+}
+.scroll-hint .track{width:1px;height:46px;background:linear-gradient(180deg,rgba(212,175,55,.7),transparent);position:relative;overflow:hidden;}
+.scroll-hint .track::after{
+  content:"";position:absolute;top:-40%;left:0;width:1px;height:40%;
+  background:var(--gold);animation:track 2.4s var(--ease) infinite;
+}
+@keyframes track{0%{top:-40%}100%{top:100%}}
+
+/* ============================================================
+   SECTION HEADS
+   ============================================================ */
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;flex-wrap:wrap;margin-bottom:clamp(38px,5vw,64px);}
+.sec-head h2{
+  font-family:var(--font-display);font-weight:900;
+  font-size:clamp(34px,5.4vw,74px);line-height:.92;letter-spacing:-.03em;
+  margin:14px 0 0;color:var(--cream);
+}
+.sec-head h2 em{font-family:var(--font-serif);font-weight:300;font-style:italic;letter-spacing:-.005em;}
+.sec-head p{max-width:38ch;}
+
+/* ============================================================
+   ROOMS SECTION (home)
+   ============================================================ */
+.rooms-grid{
+  display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(22px,3vw,46px);align-items:start;
+}
+.rooms-left{grid-column:1/8;}
+.rooms-right{grid-column:8/13;display:flex;flex-direction:column;gap:16px;}
+.room-title{
+  font-family:var(--font-display);font-weight:900;
+  font-size:clamp(40px,8.2vw,120px);line-height:.82;letter-spacing:-.045em;
+  color:var(--cream);margin:0 0 8px;
+}
+.room-title .l2{
+  display:block;font-family:var(--font-serif);font-weight:300;font-style:italic;
+  color:var(--gold);letter-spacing:-.01em;
+}
+.stats{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:14px;margin-top:38px;perspective:1200px;
+}
+.stat{
+  position:relative;padding:22px 20px;border-radius:18px;
+  background:linear-gradient(150deg,rgba(245,230,200,.07),rgba(245,230,200,.02));
+  border:1px solid var(--line);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  transform-style:preserve-3d;
+  transition:transform .9s var(--ease), border-color .5s ease, box-shadow .7s var(--ease);
+  box-shadow:0 24px 60px -34px rgba(0,0,0,.9);
+}
+.stat:hover{
+  transform:rotateX(7deg) rotateY(-9deg) translateY(-6px);
+  border-color:var(--line-strong);
+  box-shadow:0 40px 80px -34px rgba(0,0,0,1), 0 0 40px -20px rgba(212,175,55,.5);
+}
+.stat .dot{
+  width:7px;height:7px;border-radius:50%;background:var(--gold);
+  box-shadow:0 0 14px 2px rgba(212,175,55,.55);margin-bottom:14px;
+}
+.stat .num{
+  font-family:var(--font-mono);font-size:10px;letter-spacing:.24em;
+  color:rgba(245,230,200,.4);
+}
+.stat h4{
+  margin:8px 0 4px;font-family:var(--font-display);font-weight:700;
+  font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--cream);
+}
+.stat .big{
+  font-family:var(--font-serif);font-size:clamp(26px,2.6vw,36px);font-weight:400;
+  color:var(--gold);line-height:1.05;
+}
+.stat p{margin:8px 0 0;font-size:13.5px;color:var(--cream-dim);line-height:1.5;}
+
+/* room tier cards */
+.tier{
+  position:relative;display:grid;grid-template-columns:118px 1fr;gap:16px;
+  padding:14px;border-radius:20px;overflow:hidden;
+  background:linear-gradient(140deg,rgba(245,230,200,.06),rgba(245,230,200,.015));
+  border:1px solid var(--line);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  transition:transform .8s var(--ease),border-color .5s ease,box-shadow .8s var(--ease);
+}
+.tier:hover{transform:translateY(-6px);border-color:var(--line-strong);box-shadow:0 30px 70px -34px rgba(0,0,0,1);}
+.tier .thumb{
+  width:118px;height:118px;border-radius:14px;overflow:hidden;position:relative;
+  border:1px solid rgba(212,175,55,.2);
+}
+.tier .thumb img{width:100%;height:100%;object-fit:cover;transition:transform 1.4s var(--ease);filter:saturate(.9) contrast(1.05);}
+.tier:hover .thumb img{transform:scale(1.09);}
+.tier .thumb::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 40%,rgba(10,8,5,.6));
+}
+.tier .body{display:flex;flex-direction:column;justify-content:center;gap:6px;min-width:0;}
+.tier .name{
+  font-family:var(--font-display);font-weight:800;font-size:15px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--cream);
+}
+.tier .meta{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,230,200,.42);}
+.tier .price{font-family:var(--font-serif);font-size:22px;color:var(--gold);margin-top:2px;}
+.tier .price small{font-family:var(--font-mono);font-size:9px;letter-spacing:.16em;color:rgba(245,230,200,.4);margin-left:6px;}
+.tier .book{
+  align-self:flex-start;margin-top:4px;padding:8px 16px;border-radius:999px;
+  border:1px solid var(--line-strong);background:rgba(212,175,55,.08);
+  font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--gold);cursor:pointer;transition:.45s var(--ease);
+}
+.tier .book:hover{background:var(--gold);color:#140e05;transform:translateY(-2px);}
+
+/* ============================================================
+   AMENITIES STRIP
+   ============================================================ */
+.strip-wrap{position:relative;}
+.strip{
+  display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;
+  padding:6px clamp(16px,3vw,40px) 26px;
+  scrollbar-width:none;
+}
+.strip::-webkit-scrollbar{display:none;}
+.amen{
+  flex:0 0 clamp(250px,26vw,330px);scroll-snap-align:start;
+  padding:30px 26px 26px;border-radius:24px;min-height:300px;
+  display:flex;flex-direction:column;
+  background:linear-gradient(160deg,rgba(245,230,200,.075),rgba(245,230,200,.015));
+  border:1px solid var(--line);
+  backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2);
+  transition:transform .8s var(--ease),border-color .5s ease,box-shadow .8s var(--ease);
+  position:relative;overflow:hidden;
+}
+.amen::before{
+  content:"";position:absolute;inset:0;opacity:0;transition:opacity .8s var(--ease);
+  background:radial-gradient(90% 70% at 20% 0%, rgba(212,175,55,.16), transparent 70%);
+}
+.amen:hover{transform:translateY(-8px);border-color:var(--line-strong);box-shadow:0 40px 80px -40px rgba(0,0,0,1);}
+.amen:hover::before{opacity:1;}
+.amen .icon{
+  font-size:44px;line-height:1;width:86px;height:86px;display:grid;place-items:center;
+  border-radius:24px;margin-bottom:22px;
+  background:radial-gradient(circle at 32% 26%, rgba(245,230,200,.20), rgba(212,175,55,.10) 55%, rgba(10,8,5,.35));
+  border:1px solid rgba(212,175,55,.22);
+  box-shadow:0 16px 34px -18px rgba(0,0,0,.95), inset 0 1px 0 rgba(255,255,255,.22);
+  filter:drop-shadow(0 6px 10px rgba(0,0,0,.55));
+  transform:translateZ(0);
+}
+.amen h3{
+  margin:0 0 8px;font-family:var(--font-display);font-weight:800;
+  font-size:15px;letter-spacing:.2em;text-transform:uppercase;color:var(--cream);
+}
+.amen p{margin:0;font-size:14px;line-height:1.62;color:var(--cream-dim);}
+.amen .idx{
+  margin-top:auto;padding-top:18px;
+  font-family:var(--font-mono);font-size:9.5px;letter-spacing:.26em;color:var(--gold);
+}
+.strip-nav{display:flex;gap:10px;padding:0 clamp(16px,3vw,40px);}
+.strip-nav button{
+  width:48px;height:48px;border-radius:50%;cursor:pointer;
+  border:1px solid var(--line);background:rgba(26,18,8,.6);
+  color:var(--gold);display:grid;place-items:center;
+  transition:.45s var(--ease);
+}
+.strip-nav button:hover{background:rgba(212,175,55,.16);border-color:var(--gold);transform:translateY(-2px);}
+
+/* ============================================================
+   DINING SECTION
+   ============================================================ */
+.dining{
+  position:relative;overflow:hidden;
+  background:#0b0805;
+  border-block:1px solid rgba(212,175,55,.12);
+}
+.dining .bgimg{
+  position:absolute;inset:0;
+  background-size:cover;background-position:center;
+  opacity:.30;filter:saturate(.85) contrast(1.06);
+  transform:scale(1.08);
+  transition:transform 2.4s var(--ease);
+}
+.dining.in-view .bgimg{transform:scale(1);}
+.dining::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,#0b0805 6%,rgba(11,8,5,.86) 45%,rgba(11,8,5,.62) 100%),
+             linear-gradient(180deg,rgba(11,8,5,.9),transparent 30%,rgba(11,8,5,.95));
+}
+.dining .wrap{position:relative;z-index:2;}
+.dining-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(28px,4vw,64px);align-items:start;}
+.dining-name{
+  font-family:var(--font-display);font-weight:900;font-style:italic;
+  font-size:clamp(46px,7.4vw,104px);line-height:.84;letter-spacing:-.04em;
+  color:var(--cream);margin:16px 0 0;
+}
+.dining-name span{display:block;font-family:var(--font-serif);font-weight:300;color:var(--gold);font-style:italic;}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;}
+.tab{
+  padding:10px 18px;border-radius:999px;cursor:pointer;
+  border:1px solid rgba(245,230,200,.14);background:rgba(245,230,200,.03);
+  font-family:var(--font-mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--cream-dim);transition:.4s var(--ease);
+}
+.tab:hover{color:var(--cream);border-color:rgba(245,230,200,.3);}
+.tab.on{background:linear-gradient(135deg,#D4AF37,#8B6914);color:#140e05;border-color:transparent;font-weight:500;}
+.menu-list{display:grid;gap:10px;}
+.menu-card{
+  display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;
+  padding:16px 20px;border-radius:16px;
+  background:rgba(245,230,200,.045);border:1px solid rgba(212,175,55,.13);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  transition:.6s var(--ease);
+}
+.menu-card:hover{background:rgba(245,230,200,.09);border-color:var(--line-strong);transform:translateX(6px);}
+.menu-card .medal{
+  width:44px;height:44px;border-radius:50%;flex:0 0 auto;
+  background:radial-gradient(circle at 34% 28%,#F5E6C8,#D4AF37 42%,#8B6914 100%);
+  box-shadow:inset 0 1px 2px rgba(255,255,255,.55),0 8px 18px -10px rgba(0,0,0,.9);
+  display:grid;place-items:center;font-family:var(--font-serif);font-size:15px;color:#140e05;
+}
+.menu-card h4{margin:0;font-family:var(--font-display);font-weight:600;font-size:15px;letter-spacing:.01em;}
+.menu-card p{margin:3px 0 0;font-size:12.5px;color:var(--cream-dim);line-height:1.45;}
+.menu-card .price{font-family:var(--font-serif);font-size:20px;color:var(--gold);white-space:nowrap;}
+
+/* ============================================================
+   TESTIMONIALS MARQUEE
+   ============================================================ */
+.marquee{
+  position:relative;overflow:hidden;
+  padding-block:clamp(50px,7vh,80px);
+  border-block:1px solid rgba(212,175,55,.12);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+}
+.marquee .track{
+  display:flex;gap:18px;width:max-content;
+  animation:marquee 32s linear infinite;
+}
+.marquee:hover .track{animation-play-state:paused;}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.quote{
+  flex:0 0 clamp(300px,34vw,420px);
+  padding:26px 28px;border-radius:20px;
+  background:linear-gradient(160deg,rgba(245,230,200,.07),rgba(245,230,200,.02));
+  border:1px solid var(--line);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+}
+.quote .stars{color:var(--gold);letter-spacing:.22em;font-size:12px;margin-bottom:12px;}
+.quote p{margin:0;font-family:var(--font-serif);font-size:19px;line-height:1.5;color:var(--cream);font-style:italic;}
+.quote .who{
+  margin-top:16px;font-family:var(--font-mono);font-size:9.5px;letter-spacing:.24em;
+  text-transform:uppercase;color:rgba(245,230,200,.45);
+}
+.quote .who b{color:var(--gold);font-weight:400;}
+
+/* ---------- footer ticker ---------- */
+.ticker{
+  overflow:hidden;background:linear-gradient(90deg,#0a0805,#171009 50%,#0a0805);
+  border-block:1px solid rgba(212,175,55,.16);padding-block:14px;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+}
+.ticker .track{display:flex;gap:34px;width:max-content;animation:marquee 26s linear infinite;}
+.ticker span{
+  font-family:var(--font-mono);font-size:10.5px;letter-spacing:.34em;text-transform:uppercase;
+  color:var(--gold);display:inline-flex;align-items:center;gap:34px;white-space:nowrap;
+}
+.ticker span::after{content:"";width:6px;height:6px;border-radius:50%;background:var(--gold);}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer#foot{background:#0a0805;position:relative;z-index:4;padding-top:clamp(60px,8vh,96px);}
+.foot-cta{
+  display:flex;align-items:center;justify-content:space-between;gap:30px;flex-wrap:wrap;
+  padding-bottom:clamp(50px,7vh,80px);border-bottom:1px solid rgba(212,175,55,.14);
+}
+.foot-cta h2{
+  font-family:var(--font-display);font-weight:900;font-size:clamp(34px,5.6vw,74px);
+  line-height:.9;letter-spacing:-.035em;margin:0;color:var(--cream);
+}
+.foot-cta h2 em{font-family:var(--font-serif);font-weight:300;font-style:italic;color:var(--gold);}
+.orb{
+  width:clamp(96px,11vw,140px);height:clamp(96px,11vw,140px);border-radius:50%;flex:0 0 auto;
+  background:radial-gradient(circle at 34% 30%,#F5E6C8,#D4AF37 38%,#8B6914 78%,#2C1810 100%);
+  display:grid;place-items:center;cursor:pointer;border:0;
+  box-shadow:0 30px 70px -26px rgba(212,175,55,.6),inset 0 2px 6px rgba(255,255,255,.5);
+  transition:.7s var(--ease);position:relative;
+}
+.orb::after{
+  content:"";position:absolute;inset:-14px;border-radius:50%;
+  border:1px solid rgba(212,175,55,.28);animation:orb-ring 3.4s var(--ease) infinite;
+}
+@keyframes orb-ring{0%{transform:scale(.9);opacity:.9}100%{transform:scale(1.22);opacity:0}}
+.orb:hover{transform:scale(1.06) rotate(-4deg);}
+.orb svg{width:34%;color:#140e05;transition:transform .6s var(--ease);}
+.orb:hover svg{transform:translateX(5px);}
+
+.foot-cols{
+  display:grid;grid-template-columns:1.4fr repeat(4,1fr);gap:34px;
+  padding-block:clamp(44px,6vh,70px);
+}
+.foot-cols h5{
+  margin:0 0 16px;font-family:var(--font-mono);font-size:9.5px;font-weight:400;
+  letter-spacing:.3em;text-transform:uppercase;color:var(--gold);
+}
+.foot-cols ul{list-style:none;margin:0;padding:0;display:grid;gap:9px;}
+.foot-cols a{
+  font-size:13.5px;color:rgba(245,230,200,.55);transition:color .3s ease,transform .4s var(--ease);
+  display:inline-block;
+}
+.foot-cols a:hover{color:var(--gold);transform:translateX(4px);}
+.foot-brand .mark{
+  font-family:var(--font-serif);font-size:26px;letter-spacing:.2em;color:var(--gold);
+  display:flex;align-items:center;gap:10px;
+}
+.foot-brand p{margin:14px 0 0;font-size:13.5px;color:rgba(245,230,200,.45);max-width:34ch;line-height:1.65;}
+.foot-bottom{
+  display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  padding-block:22px;border-top:1px solid rgba(212,175,55,.12);
+  font-family:var(--font-mono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(245,230,200,.34);
+}
+
+/* ============================================================
+   INNER PAGES
+   ============================================================ */
+.page-hero{
+  position:relative;min-height:74svh;display:flex;align-items:flex-end;
+  padding:calc(var(--header-h) + 60px) clamp(16px,3vw,40px) clamp(40px,6vh,70px);
+  overflow:hidden;
+}
+.page-hero .media{position:absolute;inset:0;}
+.page-hero .media img{
+  width:100%;height:100%;object-fit:cover;
+  filter:saturate(.9) contrast(1.05) brightness(.82);
+  transform:scale(1.06);
+  transition:transform 2.6s var(--ease);
+}
+.page-hero.in-view .media img{transform:scale(1);}
+.page-hero .media::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(10,8,5,.86) 0%,rgba(10,8,5,.42) 42%,rgba(10,8,5,.96) 100%),
+             radial-gradient(80% 60% at 20% 90%, rgba(10,8,5,.9), transparent 70%);
+}
+.page-hero .wrap{position:relative;z-index:2;width:min(1440px,92vw);margin-inline:auto;}
+.page-hero h1{
+  font-family:var(--font-display);font-weight:900;
+  font-size:clamp(42px,7.6vw,102px);line-height:.86;letter-spacing:-.04em;
+  margin:16px 0 0;color:var(--cream);
+}
+.page-hero h1 em{font-family:var(--font-serif);font-weight:300;font-style:italic;color:var(--gold);}
+.page-hero .lede{max-width:46ch;margin-top:20px;}
+.crumb{
+  font-family:var(--font-mono);font-size:9.5px;letter-spacing:.26em;text-transform:uppercase;
+  color:rgba(245,230,200,.45);display:flex;gap:10px;align-items:center;
+}
+.crumb b{color:var(--gold);font-weight:400;}
+
+/* ---------- rooms page cards ---------- */
+.suites{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(18px,2.4vw,30px);}
+.suite{
+  position:relative;border-radius:26px;overflow:hidden;
+  border:1px solid var(--line);background:var(--glass-2);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  transition:transform .9s var(--ease),border-color .6s ease,box-shadow .9s var(--ease);
+  display:flex;flex-direction:column;
+}
+.suite:hover{transform:translateY(-10px);border-color:var(--line-strong);box-shadow:0 50px 100px -46px rgba(0,0,0,1);}
+.suite .pic{position:relative;aspect-ratio:16/10;overflow:hidden;}
+.suite .pic img{width:100%;height:100%;object-fit:cover;transition:transform 1.6s var(--ease);filter:saturate(.92) contrast(1.04);}
+.suite:hover .pic img{transform:scale(1.07);}
+.suite .pic::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(10,8,5,.85));}
+.suite .tag{
+  position:absolute;top:14px;left:14px;z-index:2;
+  padding:7px 13px;border-radius:999px;
+  background:rgba(10,8,5,.66);border:1px solid var(--line-strong);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  font-family:var(--font-mono);font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);
+}
+.suite .body{padding:24px 24px 26px;display:flex;flex-direction:column;gap:10px;flex:1;}
+.suite h3{
+  margin:0;font-family:var(--font-display);font-weight:800;font-size:19px;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--cream);
+}
+.suite .desc{font-size:13.5px;line-height:1.65;color:var(--cream-dim);margin:0;}
+.suite .specs{display:flex;flex-wrap:wrap;gap:8px;margin-top:2px;}
+.suite .specs span{
+  padding:6px 11px;border-radius:999px;border:1px solid rgba(245,230,200,.14);
+  font-family:var(--font-mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(245,230,200,.55);
+}
+.suite .foot{
+  margin-top:auto;padding-top:16px;display:flex;align-items:center;justify-content:space-between;gap:14px;
+  border-top:1px solid rgba(212,175,55,.14);
+}
+.suite .price{font-family:var(--font-serif);font-size:26px;color:var(--gold);line-height:1;}
+.suite .price small{display:block;font-family:var(--font-mono);font-size:8.5px;letter-spacing:.2em;color:rgba(245,230,200,.4);margin-top:5px;text-transform:uppercase;}
+
+/* ---------- generic split ---------- */
+.split{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(24px,4vw,60px);align-items:center;}
+.split img{border-radius:24px;border:1px solid var(--line);width:100%;height:100%;object-fit:cover;filter:saturate(.9) contrast(1.05);}
+.frame{border-radius:24px;overflow:hidden;border:1px solid var(--line);position:relative;}
+.frame img{display:block;transition:transform 1.8s var(--ease);}
+.frame:hover img{transform:scale(1.05);}
+
+/* ---------- treatments / features list ---------- */
+.rows{display:grid;gap:0;border-top:1px solid rgba(212,175,55,.14);}
+.row-item{
+  display:grid;grid-template-columns:auto 1fr auto;gap:20px;align-items:center;
+  padding:22px 6px;border-bottom:1px solid rgba(212,175,55,.14);
+  transition:background .5s ease,padding .6s var(--ease);cursor:default;
+}
+.row-item:hover{background:rgba(212,175,55,.05);padding-inline:16px;}
+.row-item .num{font-family:var(--font-mono);font-size:10px;letter-spacing:.2em;color:var(--gold);}
+.row-item h4{margin:0 0 4px;font-family:var(--font-display);font-weight:700;font-size:15px;letter-spacing:.1em;text-transform:uppercase;}
+.row-item p{margin:0;font-size:13.5px;color:var(--cream-dim);}
+.row-item .right{font-family:var(--font-serif);font-size:20px;color:var(--gold);white-space:nowrap;text-align:right;}
+.row-item .right small{display:block;font-family:var(--font-mono);font-size:8.5px;letter-spacing:.18em;color:rgba(245,230,200,.4);text-transform:uppercase;margin-top:4px;}
+
+/* ---------- info cards ---------- */
+.cards3{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;}
+.card{
+  padding:28px 26px;border-radius:22px;
+  background:linear-gradient(160deg,rgba(245,230,200,.07),rgba(245,230,200,.015));
+  border:1px solid var(--line);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  transition:.8s var(--ease);
+}
+.card:hover{transform:translateY(-6px);border-color:var(--line-strong);}
+.card .k{
+  font-family:var(--font-mono);font-size:9.5px;letter-spacing:.26em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:12px;
+}
+.card h4{margin:0 0 8px;font-family:var(--font-display);font-weight:700;font-size:15px;letter-spacing:.1em;text-transform:uppercase;}
+.card p{margin:0;font-size:13.5px;line-height:1.65;color:var(--cream-dim);}
+
+/* ---------- form ---------- */
+.form{
+  padding:clamp(24px,3vw,38px);border-radius:26px;
+  background:var(--glass-2);border:1px solid var(--line);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  box-shadow:0 50px 110px -50px rgba(0,0,0,1);
+  display:grid;gap:14px;
+}
+.form .two{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.form label{
+  display:block;font-family:var(--font-mono);font-size:9px;letter-spacing:.24em;
+  text-transform:uppercase;color:rgba(245,230,200,.45);margin-bottom:7px;
+}
+.form input,.form select,.form textarea{
+  width:100%;padding:13px 14px;border-radius:13px;
+  background:rgba(10,8,5,.6);border:1px solid rgba(212,175,55,.18);
+  color:var(--cream);font-size:14px;transition:.35s ease;
+  appearance:none;-webkit-appearance:none;font-family:var(--font-display);
+}
+.form select{
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='7' viewBox='0 0 10 7'><path d='M1 1l4 4 4-4' stroke='%23D4AF37' stroke-width='1.2' fill='none' stroke-linecap='round'/></svg>");
+  background-repeat:no-repeat;background-position:right 14px center;padding-right:34px;
+}
+.form textarea{min-height:118px;resize:vertical;line-height:1.6;}
+.form input:focus,.form select:focus,.form textarea:focus{outline:none;border-color:var(--gold);background:rgba(10,8,5,.85);}
+.form .btn-gold{width:100%;margin-top:6px;padding:16px 24px;}
+.form .note{
+  font-family:var(--font-mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(245,230,200,.35);text-align:center;margin:0;
+}
+
+/* ---------- contact blocks ---------- */
+.contact-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(26px,4vw,60px);align-items:start;}
+.contact-item{
+  display:flex;gap:16px;align-items:flex-start;padding:20px 0;
+  border-bottom:1px solid rgba(212,175,55,.14);
+}
+.contact-item:first-child{padding-top:0;}
+.contact-item .ic{
+  width:46px;height:46px;border-radius:14px;flex:0 0 auto;display:grid;place-items:center;
+  background:radial-gradient(circle at 32% 28%,rgba(245,230,200,.18),rgba(212,175,55,.08) 60%,rgba(10,8,5,.4));
+  border:1px solid rgba(212,175,55,.22);color:var(--gold);
+}
+.contact-item .ic svg{width:19px;height:19px;}
+.contact-item h4{margin:0 0 5px;font-family:var(--font-display);font-weight:700;font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--cream);}
+.contact-item p{margin:0;font-size:13.5px;color:var(--cream-dim);line-height:1.6;}
+.contact-item a.act{
+  display:inline-flex;align-items:center;gap:8px;margin-top:10px;
+  font-family:var(--font-mono);font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold);border-bottom:1px solid rgba(212,175,55,.4);padding-bottom:2px;
+  transition:.4s var(--ease);cursor:pointer;
+}
+.contact-item a.act:hover{gap:12px;border-color:var(--gold);}
+
+/* ============================================================
+   WHATSAPP CONCIERGE (floating — number never displayed)
+   ============================================================ */
+#waFab{
+  position:fixed;right:clamp(14px,2vw,28px);bottom:clamp(14px,2vw,28px);z-index:80;
+  display:flex;align-items:center;gap:0;
+}
+#waFab .fab-label{
+  order:2;margin-right:-6px;padding:11px 20px 11px 24px;border-radius:999px;
+  background:rgba(10,8,5,.82);border:1px solid var(--line-strong);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  font-family:var(--font-mono);font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--cream);white-space:nowrap;
+  opacity:0;transform:translateX(12px);pointer-events:none;
+  transition:.55s var(--ease);
+}
+#waFab:hover .fab-label{opacity:1;transform:translateX(0);}
+#waFab .fab-btn{
+  order:1;width:62px;height:62px;border-radius:50%;border:0;cursor:pointer;
+  background:radial-gradient(circle at 34% 28%,#F5E6C8,#D4AF37 40%,#8B6914 82%,#2C1810 100%);
+  display:grid;place-items:center;position:relative;
+  box-shadow:0 22px 50px -18px rgba(212,175,55,.65),inset 0 2px 5px rgba(255,255,255,.5);
+  transition:.6s var(--ease);
+}
+#waFab .fab-btn:hover{transform:scale(1.07) rotate(-6deg);}
+#waFab .fab-btn::after{
+  content:"";position:absolute;inset:0;border-radius:50%;
+  border:1px solid rgba(212,175,55,.55);animation:orb-ring 3s var(--ease) infinite;
+}
+#waFab .fab-btn::before{
+  content:"";position:absolute;inset:-6px;border-radius:50%;
+  border:1px solid rgba(212,175,55,.22);animation:orb-ring 3s var(--ease) 1s infinite;
+}
+#waFab svg{width:29px;height:29px;color:#170f04;}
+
+/* ============================================================
+   AMBIENCE DRAWER (palette switcher)
+   ============================================================ */
+#drawerToggle{
+  position:fixed;left:clamp(14px,2vw,28px);bottom:clamp(14px,2vw,28px);z-index:80;
+  width:54px;height:54px;border-radius:50%;cursor:pointer;
+  border:1px solid var(--line);background:rgba(10,8,5,.7);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  display:grid;place-items:center;color:var(--gold);transition:.5s var(--ease);
+}
+#drawerToggle:hover{background:rgba(212,175,55,.14);border-color:var(--gold);transform:rotate(45deg);}
+#drawerToggle svg{width:20px;height:20px;}
+
+#scrim{
+  position:fixed;inset:0;z-index:88;background:rgba(4,3,1,.6);
+  backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
+  opacity:0;visibility:hidden;transition:.6s var(--ease);
+}
+#scrim.on{opacity:1;visibility:visible;}
+#drawer{
+  position:fixed;top:0;right:0;bottom:0;z-index:90;width:min(390px,92vw);
+  background:linear-gradient(180deg,rgba(16,11,5,.97),rgba(8,6,3,.99));
+  border-left:1px solid var(--line);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  transform:translateX(102%);transition:transform .8s var(--ease);
+  display:flex;flex-direction:column;overflow-y:auto;
+  box-shadow:-40px 0 90px -40px rgba(0,0,0,1);
+}
+#drawer.on{transform:none;}
+.drawer-head{padding:28px 26px 20px;border-bottom:1px solid rgba(212,175,55,.14);display:flex;align-items:flex-start;justify-content:space-between;gap:16px;}
+.drawer-head h3{margin:0;font-family:var(--font-serif);font-size:26px;font-weight:400;color:var(--cream);letter-spacing:.02em;}
+.drawer-head p{margin:8px 0 0;font-size:13px;color:var(--cream-dim);line-height:1.6;}
+.drawer-close{
+  width:38px;height:38px;border-radius:50%;flex:0 0 auto;cursor:pointer;
+  border:1px solid var(--line);background:rgba(245,230,200,.04);color:var(--gold);
+  display:grid;place-items:center;transition:.4s var(--ease);
+}
+.drawer-close:hover{background:rgba(212,175,55,.16);transform:rotate(90deg);}
+.drawer-body{padding:24px 26px;flex:1;}
+.drawer-body .grp{margin-bottom:28px;}
+.drawer-body .grp>span{
+  display:block;font-family:var(--font-mono);font-size:9px;letter-spacing:.3em;
+  text-transform:uppercase;color:rgba(245,230,200,.4);margin-bottom:14px;
+}
+.themes{display:grid;gap:10px;}
+.theme{
+  display:flex;align-items:center;gap:14px;padding:13px 15px;border-radius:16px;cursor:pointer;
+  border:1px solid rgba(245,230,200,.1);background:rgba(245,230,200,.03);
+  transition:.45s var(--ease);text-align:left;width:100%;
+}
+.theme:hover{background:rgba(245,230,200,.08);border-color:var(--line-strong);transform:translateX(4px);}
+.theme.on{border-color:var(--gold);background:rgba(212,175,55,.12);}
+.theme .sw{
+  width:40px;height:40px;border-radius:12px;flex:0 0 auto;position:relative;overflow:hidden;
+  border:1px solid rgba(245,230,200,.14);
+}
+.theme .sw i{
+  position:absolute;inset:0;display:block;
+}
+.theme .sw b{
+  position:absolute;left:50%;top:50%;width:15px;height:15px;border-radius:50%;
+  transform:translate(-50%,-50%);
+  box-shadow:0 0 12px 1px currentColor;
+}
+.theme .txt strong{
+  display:block;font-family:var(--font-display);font-weight:700;font-size:12px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--cream);
+}
+.theme .txt span{
+  display:block;font-family:var(--font-mono);font-size:8.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:rgba(245,230,200,.42);margin-top:3px;
+}
+.theme .check{margin-left:auto;color:var(--gold);opacity:0;transition:.4s ease;}
+.theme.on .check{opacity:1;}
+
+.toggle-row{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:14px 0;border-bottom:1px solid rgba(212,175,55,.12);
+}
+.toggle-row .lbl{font-size:13px;color:var(--cream-dim);}
+.toggle-row .lbl b{display:block;font-family:var(--font-display);font-weight:600;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--cream);margin-bottom:3px;}
+.sw2{
+  width:46px;height:26px;border-radius:999px;border:1px solid var(--line);
+  background:rgba(245,230,200,.06);position:relative;cursor:pointer;flex:0 0 auto;transition:.4s ease;
+}
+.sw2::after{
+  content:"";position:absolute;top:50%;left:3px;width:18px;height:18px;border-radius:50%;
+  transform:translateY(-50%);background:rgba(245,230,200,.5);transition:.45s var(--ease);
+}
+.sw2.on{background:rgba(212,175,55,.28);border-color:var(--gold);}
+.sw2.on::after{left:23px;background:var(--gold);box-shadow:0 0 12px rgba(212,175,55,.8);}
+.drawer-foot{
+  padding:20px 26px 26px;border-top:1px solid rgba(212,175,55,.14);
+  display:grid;gap:10px;
+}
+.drawer-foot .r{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  font-family:var(--font-mono);font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(245,230,200,.34);
+}
+.drawer-foot .r b{color:var(--gold);font-weight:400;letter-spacing:.18em;}
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+#toast{
+  position:fixed;left:50%;bottom:34px;transform:translate(-50%,24px);z-index:120;
+  padding:14px 22px;border-radius:999px;
+  background:rgba(10,8,5,.92);border:1px solid var(--line-strong);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--cream);opacity:0;visibility:hidden;transition:.6s var(--ease);
+  box-shadow:0 26px 60px -30px rgba(0,0,0,1);max-width:88vw;text-align:center;
+}
+#toast.on{opacity:1;visibility:visible;transform:translate(-50%,0);}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width:1180px){
+  .hero-grid{grid-template-columns:1fr;align-items:stretch;}
+  .rooms-left,.rooms-right{grid-column:1/-1;}
+  .rooms-right{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));}
+  .dining-grid{grid-template-columns:1fr;}
+  .foot-cols{grid-template-columns:1fr 1fr 1fr;}
+  .foot-brand{grid-column:1/-1;}
+  .contact-grid{grid-template-columns:1fr;}
+}
+@media (max-width:900px){
+  :root{--header-h:70px;}
+  nav.main{display:none;}
+  .head-right{margin-left:auto;}
+  .burger{display:flex;}
+  .lang{display:none;}
+  .hero{padding-top:calc(var(--header-h) + 24px);}
+  .hero .sub{font-size:16px;}
+  .scroll-hint{display:none;}
+  .tier{grid-template-columns:88px 1fr;}
+  .tier .thumb{width:88px;height:88px;}
+}
+@media (max-width:620px){
+  .form .two{grid-template-columns:1fr;}
+  .avail .row{grid-template-columns:1fr;}
+  .foot-cols{grid-template-columns:1fr 1fr;}
+  .hero-meta{gap:18px;}
+  #waFab .fab-label{display:none;}
+  .row-item{grid-template-columns:auto 1fr;gap:14px;}
+  .row-item .right{grid-column:2;text-align:left;}
+}
+
+/* ---------- utility ---------- */
+.center{text-align:center;}
+.mt-sm{margin-top:18px}.mt-md{margin-top:34px}.mt-lg{margin-top:56px}
+.gold-rule{height:1px;background:linear-gradient(90deg,transparent,rgba(212,175,55,.5),transparent);border:0;margin:0;}
+.hide{display:none!important;}
+</style>
+</head>
+
+<body class="is-loading">
+
+<!-- ============ BACKGROUND LAYERS (palette morphing) ============ -->
+<div id="bg" aria-hidden="true">
+  <div class="layer l1" id="bgL1"></div>
+  <div class="layer l2" id="bgL2"></div>
+  <div class="layer l3" id="bgL3"></div>
+</div>
+<div id="grain" aria-hidden="true"></div>
+<div id="photoLayer" aria-hidden="true"><img id="photoLayerImg" src="" alt=""><div class="photo-veil"></div></div>
+<canvas id="scene" aria-hidden="true"></canvas>
+<div id="vignette" aria-hidden="true"></div>
+
+<!-- ============ SVG SPRITE ============ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-crown" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M2.5 7.5l3.6 3.1L12 4l5.9 6.6 3.6-3.1-1.9 11.4H4.4L2.5 7.5z"/>
+    <circle cx="12" cy="3" r="1.1" fill="currentColor" stroke="none"/>
+    <circle cx="4.4" cy="17.2" r="1" fill="currentColor" stroke="none"/>
+    <circle cx="19.6" cy="17.2" r="1" fill="currentColor" stroke="none"/>
+  </symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 12h15"/><path d="M13 6l6 6-6 6"/>
+  </symbol>
+  <symbol id="i-arrow-ur" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M7 17L17 7"/><path d="M8 7h9v9"/>
+  </symbol>
+  <symbol id="i-wa" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M17.47 14.36c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.95 1.16-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.76-1.66-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.6-.92-2.19-.24-.57-.48-.5-.67-.51h-.57c-.2 0-.51.07-.78.37-.27.3-1.02 1-.99 2.43.02 1.43 1.04 2.81 1.19 3.01.15.2 2.04 3.28 4.98 4.47 2.94 1.19 2.94.79 3.47.74.53-.05 1.72-.7 1.96-1.37.24-.68.24-1.26.17-1.38-.07-.12-.27-.2-.57-.35z"/>
+    <path d="M12.04 2.5A9.3 9.3 0 0 0 3.7 20.3l-1.2 3.2 3.3-1.16A9.3 9.3 0 1 0 12.04 2.5zm0 17a7.7 7.7 0 0 1-3.9-1.07l-.28-.17-2.14.75.72-2.06-.19-.3A7.66 7.66 0 1 1 12.04 19.5z"/>
+  </symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6.5 3h3l1.5 4-2 1.5a11 11 0 0 0 5.5 5.5l1.5-2 4 1.5v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4.5 5.2 2 2 0 0 1 6.5 3z"/>
+  </symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5l8.5 6 8.5-6"/>
+  </symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/>
+  </symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3.2 2"/>
+  </symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
+    <circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.7 2.6 15.3 0 18M12 3c-2.6 2.7-2.6 15.3 0 18"/>
+  </symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+    <path d="M4 8h10M18 8h2M4 16h4M12 16h8"/><circle cx="16" cy="8" r="2"/><circle cx="10" cy="16" r="2"/>
+  </symbol>
+  <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+    <path d="M6 6l12 12M18 6L6 18"/>
+  </symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 12.5l5 5L20 6.5"/>
+  </symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 5l7 7-7 7"/>
+  </symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round">
+    <rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/>
+  </symbol>
+  <symbol id="i-bed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round">
+    <path d="M3 18v-8M3 10h18v8M21 18v2M3 18v2"/><path d="M6.5 10V7.5h11V10"/>
+  </symbol>
+  <symbol id="i-bell" viewBox="0 0 32 32">
+    <g fill="none" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="ring">
+      <path d="M16 5.5c-4.6 0-8.3 3.6-8.3 8.1 0 3-.9 5.6-2.4 7.6-.5.7 0 1.7.9 1.7h19.6c.9 0 1.4-1 .9-1.7-1.5-2-2.4-4.6-2.4-7.6 0-4.5-3.7-8.1-8.3-8.1z" fill="rgba(212,175,55,.10)"/>
+      <path d="M13.4 25.5a2.8 2.8 0 0 0 5.2 0" />
+      <path d="M16 3.2v2.3"/>
+    </g>
+  </symbol>
+</svg>
+
+<!-- ============ LOADER ============ -->
+<div id="loader" role="status" aria-live="polite">
+  <div class="bell">
+    <div class="halo"></div>
+    <svg viewBox="0 0 32 32"><use href="#i-bell"/></svg>
+  </div>
+  <div class="loader-mark"><span class="thin">AURUM</span><span class="star">✦</span><span class="heavy">GRAND</span></div>
+  <div class="loader-bar"><span id="loaderBar"></span></div>
+  <div class="loader-step" id="loaderStep">Preparing your suite…</div>
+  <div class="loader-pct" id="loaderPct">0%</div>
+</div>
+
+<!-- ============ HEADER ============ -->
+<header id="top">
+  <a class="brand" href="#/" aria-label="AURUM GRAND — home">
+    <span class="crown"><svg><use href="#i-crown"/></svg></span>
+    <span class="mark"><span class="aurum">AURUM</span><span class="grand">GRAND</span></span>
+  </a>
+
+  <nav class="main" id="navMain"></nav>
+
+  <div class="head-right">
+    <div class="lang" id="langPill" tabindex="0" role="button" aria-haspopup="listbox" aria-expanded="false">
+      <svg class="globe"><use href="#i-globe"/></svg>
+      <span id="langCur">EN</span>
+      <div class="lang-menu" id="langMenu" role="listbox"></div>
+    </div>
+    <button class="btn btn-gold" data-wa="reserve-header">
+      <span data-i18n="reserve">Reserve</span>
+    </button>
+    <button class="burger" id="burger" aria-label="Menu"><i></i><i></i><i></i></button>
+  </div>
+</header>
+
+<!-- ============ MOBILE NAV ============ -->
+<div id="mobileNav"></div>
+
+<!-- ============ APP (SPA) ============ -->
+<main id="app"></main>
+
+<!-- ============ FOOTER ============ -->
+<footer id="foot">
+  <div class="ticker" aria-hidden="true">
+    <div class="track" id="footTicker"></div>
+  </div>
+
+  <div class="wrap pad" style="padding-block:clamp(50px,7vh,86px)">
+    <div class="foot-cta">
+      <div data-reveal>
+        <span class="eyebrow" data-i18n="ctaEyebrow">Reservations · Open Daily</span>
+        <h2><em data-i18n="ctaBegin">Begin</em> <span data-i18n="ctaJourney">your journey</span></h2>
+        <p class="lede mt-sm" style="max-width:40ch" data-i18n="ctaText">Our concierge answers in under two minutes, day or night — by WhatsApp, in your language.</p>
+        <div class="hero-cta">
+          <button class="btn btn-gold" data-wa="reserve-footer"><span data-i18n="reserveNow">Reserve now</span> <svg class="arw" width="16" height="16"><use href="#i-arrow"/></svg></button>
+        </div>
+      </div>
+      <button class="orb" id="orbCTA" aria-label="Begin your journey">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></svg>
+      </button>
+    </div>
+
+    <div class="foot-cols" id="footCols"></div>
+
+    <div class="foot-bottom">
+      <span>© <span id="year">2026</span> AURUM GRAND · <span data-i18n="rights">All rights reserved</span></span>
+      <span data-i18n="taglineFoot">Where every moment is golden.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ WHATSAPP CONCIERGE ============ -->
+<div id="waFab">
+  <span class="fab-label" data-i18n="chatConcierge">Chat with our concierge</span>
+  <button class="fab-btn" data-wa="fab" aria-label="Chat with our concierge on WhatsApp">
+    <svg viewBox="0 0 24 24"><use href="#i-wa"/></svg>
+  </button>
+</div>
+
+<!-- ============ AMBIENCE DRAWER ============ -->
+<button id="drawerToggle" aria-label="Ambience controls">
+  <svg><use href="#i-sliders"/></svg>
+</button>
+<div id="scrim"></div>
+<aside id="drawer" aria-hidden="true">
+  <div class="drawer-head">
+    <div>
+      <h3 data-i18n="ambience">Ambience Controls</h3>
+      <p data-i18n="ambienceNote">Set the mood of your digital stay. The scene adapts as you explore each floor.</p>
+    </div>
+    <button class="drawer-close" id="drawerClose" aria-label="Close"><svg width="16" height="16"><use href="#i-close"/></svg></button>
+  </div>
+  <div class="drawer-body">
+    <div class="grp">
+      <span data-i18n="palette">Palette</span>
+      <div class="themes" id="themes"></div>
+    </div>
+    <div class="grp">
+      <span data-i18n="sceneControls">Scene Controls</span>
+      <div class="toggle-row">
+        <div class="lbl"><b data-i18n="motion">Motion</b><span data-i18n="motionNote">Animated 3D chandelier</span></div>
+        <div class="sw2 on" id="tgMotion"></div>
+      </div>
+      <div class="toggle-row">
+        <div class="lbl"><b data-i18n="sound">Sound</b><span data-i18n="soundNote">Crystal clink ambience</span></div>
+        <div class="sw2" id="tgSound"></div>
+      </div>
+      <div class="toggle-row" style="border-bottom:0">
+        <div class="lbl"><b data-i18n="bloom">Bloom</b><span data-i18n="bloomNote">Volumetric light glow</span></div>
+        <div class="sw2 on" id="tgBloom"></div>
+      </div>
+    </div>
+  </div>
+  <div class="drawer-foot">
+    <div class="r"><span data-i18n="renderEngine">RENDER ENGINE</span><b>THREE.JS · WEBGL</b></div>
+    <div class="r"><span data-i18n="atmosSystem">ATMOSPHERE SYSTEM</span><b>VOLUMETRIC LIGHTING</b></div>
+  </div>
+</aside>
+
+<div id="toast"></div>
+
+<!-- hidden bridge used to open WhatsApp while preserving the user gesture -->
+<a id="waBridge" href="#" target="_blank" rel="noopener noreferrer" style="display:none" aria-hidden="true" tabindex="-1"></a>
+
+<script type="module">
+/* Three.js loads through the import map declared in <head>; if that CDN is
+   unreachable we fall back to a second CDN before giving up on the 3D layer. */
+let THREE = null;
+let RoomEnvironment = null;
+let THREE_BASE = null;               // 'addons' = bare specifiers resolved by the import map
+await (async function loadThree(){
+  const attempts = [
+    () => import('three').then(async T => ({
+      T, RE:(await import('three/addons/environments/RoomEnvironment.js')).RoomEnvironment, base:'addons'
+    })),
+    () => import('https://unpkg.com/three@0.161.0/build/three.module.js').then(async T => ({
+      T, RE:(await import('https://unpkg.com/three@0.161.0/examples/jsm/environments/RoomEnvironment.js')).RoomEnvironment,
+      base:'https://unpkg.com/three@0.161.0'
+    })),
+    () => import('https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.module.js').then(async T => ({
+      T, RE:(await import('https://cdn.jsdelivr.net/npm/three@0.161.0/examples/jsm/environments/RoomEnvironment.js')).RoomEnvironment,
+      base:'https://cdn.jsdelivr.net/npm/three@0.161.0'
+    }))
+  ];
+  for(const attempt of attempts){
+    try{
+      const res = await attempt();
+      if(res && res.T){
+        THREE = res.T; RoomEnvironment = res.RE; THREE_BASE = res.base;
+        return;
+      }
+    }catch(err){
+      console.warn('[AURUM GRAND] three.js source unavailable, trying the next:', err);
+    }
+  }
+  console.warn('[AURUM GRAND] 3D scene unavailable — continuing in flat mode.');
+})();
+
+/* ============================================================
+   0 · CONSTANTS
+   ============================================================ */
+const WA_NUMBER = '254112272061';          // concierge line — never rendered in the UI
+const LERP = 0.07;                          // weighty hotel feel
+const WHEEL_MULT = 0.85;
+const REPULSE_RADIUS = 2.2;
+const REPULSE_STRENGTH = 0.06;
+const FLOOR_Y = -4;
+const RESTITUTION = 0.75;
+const SPHERE_COUNT = 96;
+
+const THEMES = {
+  obsidian: {
+    id:'obsidian', name:'Obsidian Gold', note:'Deep gold · Obsidian night',
+    sphere:0xD4AF37, pearl:0xF5E6C8, accent:'#D4AF37',
+    bg:[
+      'radial-gradient(circle at center, #1a1208 0%, #2c1810 40%, #0d0a05 100%)',
+      'radial-gradient(circle at center, #1a1208 0%, #3d2a05 40%, #D4AF37 100%)',
+      'radial-gradient(circle at center, #0a0a0a 0%, #1a1208 50%, #8B6914 100%)'
+    ]
+  },
+  rose: {
+    id:'rose', name:'Champagne Rose', note:'Blush pearl · Warm cream',
+    sphere:0xF4C2C2, pearl:0xFFF3E6, accent:'#F4C2C2',
+    bg:[
+      'radial-gradient(circle at center, #2b1a12 0%, #4c2f22 45%, #1a0f08 100%)',
+      'radial-gradient(circle at center, #3a2318 0%, #7a4c34 45%, #F4C2C2 100%)',
+      'radial-gradient(circle at center, #1d1210 0%, #3d2119 50%, #b06a52 100%)'
+    ]
+  },
+  sapphire: {
+    id:'sapphire', name:'Midnight Sapphire', note:'Royal blue · Near black',
+    sphere:0x4169E1, pearl:0xD6E2FF, accent:'#4169E1',
+    bg:[
+      'radial-gradient(circle at center, #05070f 0%, #0b1120 45%, #010206 100%)',
+      'radial-gradient(circle at center, #05070f 0%, #12224d 45%, #4169E1 100%)',
+      'radial-gradient(circle at center, #02040a 0%, #0a1024 50%, #1b2f6b 100%)'
+    ]
+  },
+  emerald: {
+    id:'emerald', name:'Emerald Marble', note:'Deep forest · Verdant stone',
+    sphere:0x50C878, pearl:0xE9F8EE, accent:'#50C878',
+    bg:[
+      'radial-gradient(circle at center, #04120b 0%, #0a2116 45%, #020a06 100%)',
+      'radial-gradient(circle at center, #04120b 0%, #0f3a25 45%, #50C878 100%)',
+      'radial-gradient(circle at center, #020a06 0%, #0b2417 50%, #1f6b41 100%)'
+    ]
+  }
+};
+
+const I18N = {
+  en: {
+    dir:'ltr', label:'English',
+    nav:['Rooms','Dining','Spa','Events','Contact'],
+    reserve:'Reserve', reserveNow:'Reserve now', chatConcierge:'Chat with our concierge',
+    heroEyebrow:'Five Star · Est. 1924',
+    heroHead1:'Sleep in', heroHead2:'pure gold.',
+    heroSub:'124 suites. One singular address.',
+    explore:'Explore Rooms', viewAmenities:'View Amenities',
+    availTitle:'Room availability', checkIn:'Check in', checkOut:'Check out',
+    guests:'Guests', checkAvail:'Check Availability', anySuite:'Any suite',
+    roomsEyebrow:'The Suites', roomsHead1:'Rooms', roomsHead2:'& Residences',
+    roomsText:'Twelve floors of quiet. Hand-finished marble, brushed brass and linen — every suite framed by the city.',
+    amenitiesEyebrow:'The House', amenitiesHead1:'Amenities',
+    diningEyebrow:'The Table', diningHead1:'Fine', diningHead2:'Dining',
+    diningText:'Three kitchens, one cellar of 4,200 bottles, and a chef who answers to the season.',
+    testimonialsEyebrow:'Guest Book', testimonialsHead1:'Whispers', testimonialsHead2:'from the guest book',
+    ctaEyebrow:'Reservations · Open Daily', ctaBegin:'Begin', ctaJourney:'your journey',
+    ctaText:'Our concierge answers in under two minutes, day or night — by WhatsApp, in your language.',
+    ambience:'Ambience Controls',
+    ambienceNote:'Set the mood of your digital stay. The scene adapts as you explore each floor.',
+    palette:'Palette', sceneControls:'Scene Controls',
+    motion:'Motion', motionNote:'Animated 3D chandelier',
+    sound:'Sound', soundNote:'Crystal clink ambience',
+    bloom:'Bloom', bloomNote:'Volumetric light glow',
+    renderEngine:'RENDER ENGINE', atmosSystem:'ATMOSPHERE SYSTEM',
+    rights:'All rights reserved', taglineFoot:'Where every moment is golden.',
+    book:'Book', perNight:'per night', from:'from', bookSuite:'Reserve this suite',
+    bookTable:'Reserve a table', bookTreatment:'Book treatment', inquire:'Request a proposal',
+    sendInquiry:'Send inquiry', fullName:'Full name', email:'Email address',
+    message:'Message', yourStay:'Tell us about your stay',
+    address:'Address', hours:'Hours', daily:'24 hours daily', concierge:'Concierge',
+    waCta:'Message us on WhatsApp', emailCta:'Write to reservations',
+    menuTabs:['Starters','Mains','Desserts','Cellar'],
+    scroll:'Scroll'
+  },
+  fr: {
+    dir:'ltr', label:'Français',
+    nav:['Chambres','Restaurant','Spa','Événements','Contact'],
+    reserve:'Réserver', reserveNow:'Réserver maintenant', chatConcierge:'Parler au concierge',
+    heroEyebrow:'Cinq Étoiles · Depuis 1924',
+    heroHead1:'Dormez dans', heroHead2:'l’or pur.',
+    heroSub:'124 suites. Une seule adresse.',
+    explore:'Voir les chambres', viewAmenities:'Voir les services',
+    availTitle:'Disponibilités', checkIn:'Arrivée', checkOut:'Départ',
+    guests:'Voyageurs', checkAvail:'Vérifier', anySuite:'Toute suite',
+    roomsEyebrow:'Les Suites', roomsHead1:'Chambres', roomsHead2:'& Résidences',
+    roomsText:'Douze étages de silence. Marbre poli, laiton brossé et lin — chaque suite ouverte sur la ville.',
+    amenitiesEyebrow:'La Maison', amenitiesHead1:'Services',
+    diningEyebrow:'La Table', diningHead1:'Haute', diningHead2:'Cuisine',
+    diningText:'Trois cuisines, une cave de 4 200 bouteilles, et un chef qui écoute la saison.',
+    testimonialsEyebrow:'Livre d’Or', testimonialsHead1:'Murmures', testimonialsHead2:'du livre d’or',
+    ctaEyebrow:'Réservations · Ouvert tous les jours', ctaBegin:'Commencez', ctaJourney:'votre voyage',
+    ctaText:'Notre concierge répond en moins de deux minutes, jour et nuit — sur WhatsApp, dans votre langue.',
+    ambience:'Ambiances',
+    ambienceNote:'Réglez l’ambiance de votre séjour numérique. La scène s’adapte à chaque étage.',
+    palette:'Palette', sceneControls:'Réglages',
+    motion:'Mouvement', motionNote:'Lustre 3D animé',
+    sound:'Son', soundNote:'Ambiance cristal',
+    bloom:'Halo', bloomNote:'Lumière volumétrique',
+    renderEngine:'MOTEUR DE RENDU', atmosSystem:'SYSTÈME D’ATMOSPHÈRE',
+    rights:'Tous droits réservés', taglineFoot:'Chaque instant est d’or.',
+    book:'Réserver', perNight:'par nuit', from:'à partir de', bookSuite:'Réserver cette suite',
+    bookTable:'Réserver une table', bookTreatment:'Réserver un soin', inquire:'Demander un devis',
+    sendInquiry:'Envoyer', fullName:'Nom complet', email:'Adresse e-mail',
+    message:'Message', yourStay:'Parlez-nous de votre séjour',
+    address:'Adresse', hours:'Horaires', daily:'24h/24', concierge:'Concierge',
+    waCta:'Écrire sur WhatsApp', emailCta:'Écrire aux réservations',
+    menuTabs:['Entrées','Plats','Desserts','Cave'],
+    scroll:'Défiler'
+  },
+  sw: {
+    dir:'ltr', label:'Kiswahili',
+    nav:['Vyumba','Chakula','Spa','Hafla','Mawasiliano'],
+    reserve:'Weka Nafasi', reserveNow:'Weka nafasi sasa', chatConcierge:'Ongea na mhudumu',
+    heroEyebrow:'Nyota Tano · Tangu 1924',
+    heroHead1:'Lala katika', heroHead2:'dhahabu safi.',
+    heroSub:'Vyumba 124. Anwani moja ya kipekee.',
+    explore:'Tazama vyumba', viewAmenities:'Tazama huduma',
+    availTitle:'Upatikanaji', checkIn:'Kuingia', checkOut:'Kutoka',
+    guests:'Wageni', checkAvail:'Angalia', anySuite:'Chumba chochote',
+    roomsEyebrow:'Vyumba', roomsHead1:'Vyumba', roomsHead2:'& Nyumba',
+    roomsText:'Ghorofa kumi na mbili za utulivu. Marumaru, shaba na kitani safi — kila chumba kikitazama jiji.',
+    amenitiesEyebrow:'Nyumba Kuu', amenitiesHead1:'Huduma',
+    diningEyebrow:'Meza', diningHead1:'Chakula', diningHead2:'Bora',
+    diningText:'Jiko tatu, sherehe ya chupa 4,200, na mpishi anayefuata msimu.',
+    testimonialsEyebrow:'Kitabu cha Wageni', testimonialsHead1:'Maneno', testimonialsHead2:'ya wageni',
+    ctaEyebrow:'Uhifadhi · Kila Siku', ctaBegin:'Anza', ctaJourney:'safari yako',
+    ctaText:'Mhudumu wetu hujibu ndani ya dakika mbili, usiku na mchana — kupitia WhatsApp.',
+    ambience:'Mazingira',
+    ambienceNote:'Chagua hali ya mapumziko yako. Mandhari hubadilika unapotembea.',
+    palette:'Rangi', sceneControls:'Mipangilio',
+    motion:'Mwendo', motionNote:'Taa ya 3D inayosonga',
+    sound:'Sauti', soundNote:'Mwangwi wa bilauri',
+    bloom:'Mwanga', bloomNote:'Mwanga wa anga',
+    renderEngine:'INJINI YA PICHA', atmosSystem:'MFUMO WA ANGA',
+    rights:'Haki zote zimehifadhiwa', taglineFoot:'Kila wakati ni wa dhahabu.',
+    book:'Weka', perNight:'kwa usiku', from:'kuanzia', bookSuite:'Weka chumba hiki',
+    bookTable:'Weka meza', bookTreatment:'Weka tiba', inquire:'Omba pendekezo',
+    sendInquiry:'Tuma', fullName:'Jina kamili', email:'Barua pepe',
+    message:'Ujumbe', yourStay:'Tueleze kuhusu safari yako',
+    address:'Anwani', hours:'Saa', daily:'Saa 24 kila siku', concierge:'Mhudumu',
+    waCta:'Tutumie ujumbe WhatsApp', emailCta:'Andikia uhifadhi',
+    menuTabs:['Vitafunio','Vyakula','Vitindamlo','Sherehe'],
+    scroll:'Sogeza'
+  },
+  ar: {
+    dir:'rtl', label:'العربية',
+    nav:['الغرف','المطعم','السبا','الفعاليات','اتصل بنا'],
+    reserve:'احجز', reserveNow:'احجز الآن', chatConcierge:'تحدث مع الاستقبال',
+    heroEyebrow:'خمس نجوم · منذ 1924',
+    heroHead1:'نَم في', heroHead2:'ذهبٍ خالص.',
+    heroSub:'124 جناحاً. عنوان واحد لا يتكرر.',
+    explore:'استكشف الغرف', viewAmenities:'المرافق',
+    availTitle:'التوفر', checkIn:'الوصول', checkOut:'المغادرة',
+    guests:'الضيوف', checkAvail:'تحقق', anySuite:'أي جناح',
+    roomsEyebrow:'الأجنحة', roomsHead1:'الغرف', roomsHead2:'والأجنحة',
+    roomsText:'اثنا عشر طابقاً من الهدوء. رخام مصقول ونحاس مطفي وكتّان ناعم، وكل جناح يطل على المدينة.',
+    amenitiesEyebrow:'المانور', amenitiesHead1:'المرافق',
+    diningEyebrow:'المائدة', diningHead1:'مطعم', diningHead2:'فاخر',
+    diningText:'ثلاثة مطابخ، وقبو يضم 4,200 زجاجة، وطاهٍ يستلهم من الموسم.',
+    testimonialsEyebrow:'سجل الضيوف', testimonialsHead1:'همسات', testimonialsHead2:'من سجل الضيوف',
+    ctaEyebrow:'الحجوزات · طوال الأسبوع', ctaBegin:'ابدأ', ctaJourney:'رحلتك',
+    ctaText:'يرد الاستقبال في أقل من دقيقتين، ليلاً أو نهاراً — عبر واتساب، بلغتك.',
+    ambience:'أجواء المكان',
+    ambienceNote:'اضبط مزاج إقامتك الرقمية. يتغير المشهد مع كل طابق تزوره.',
+    palette:'لوحة الألوان', sceneControls:'إعدادات المشهد',
+    motion:'الحركة', motionNote:'ثريا ثلاثية الأبعاد',
+    sound:'الصوت', soundNote:'رنين الكريستال',
+    bloom:'التوهج', bloomNote:'إضاءة حجمية',
+    renderEngine:'محرك العرض', atmosSystem:'نظام الأجواء',
+    rights:'جميع الحقوق محفوظة', taglineFoot:'كل لحظة ذهبية.',
+    book:'احجز', perNight:'في الليلة', from:'من', bookSuite:'احجز هذا الجناح',
+    bookTable:'احجز طاولة', bookTreatment:'احجز جلسة', inquire:'اطلب عرضاً',
+    sendInquiry:'إرسال', fullName:'الاسم الكامل', email:'البريد الإلكتروني',
+    message:'رسالة', yourStay:'أخبرنا عن إقامتك',
+    address:'العنوان', hours:'ساعات العمل', daily:'على مدار الساعة', concierge:'الاستقبال',
+    waCta:'راسلنا على واتساب', emailCta:'راسل الحجوزات',
+    menuTabs:['المقبلات','الأطباق','الحلويات','القبو'],
+    scroll:'انتقل'
+  }
+};
+
+/* ============================================================
+   1 · CONTENT
+   ============================================================ */
+const IMG = 'assets/img';
+const SUITES = [
+  { id:'presidential', name:'Presidential Suite', img:`${IMG}/room-1.jpg`, tag:'Signature',
+    size:'280 sqm', floor:'47th Floor', view:'Panoramic city & skyline', beds:'1 King · 2 lounges',
+    price:'KSh 620,000', desc:'Double-height ceilings, a private gallery of East African art, and a marble bath that fills itself at your chosen hour.' },
+  { id:'terrace', name:'Panoramic Terrace Suite', img:`${IMG}/room-2.jpg`, tag:'Terrace',
+    size:'165 sqm', floor:'39th Floor', view:'Sunset over the hills', beds:'1 King · day lounge',
+    price:'KSh 345,000', desc:'Glass walls retract onto a private terrace with a heated plunge pool and a brass lantern lit at dusk.' },
+  { id:'residence', name:'Royal Garden Residence', img:`${IMG}/room-3.jpg`, tag:'Residence',
+    size:'340 sqm', floor:'Grounds · Level 2', view:'Walled garden & fountain court', beds:'2 King · staff quarters',
+    price:'KSh 510,000', desc:'A private wing with its own entrance, garden courtyard, dining pavilion and a butler on call around the clock.' },
+  { id:'corner', name:'Grand Corner Suite', img:`${IMG}/room-4.jpg`, tag:'Corner',
+    size:'120 sqm', floor:'31st – 44th', view:'Dual aspect city', beds:'1 King · study',
+    price:'KSh 268,000', desc:'Two walls of glass meeting at the corner of the tower, with a writing desk that catches the morning.' },
+  { id:'sky', name:'Aurum Sky Villa', img:`${IMG}/hero-suite.jpg`, tag:'Penthouse',
+    size:'420 sqm', floor:'Level 48 · Top', view:'360° horizon', beds:'3 King · infinity pool',
+    price:'KSh 980,000', desc:'The whole forty-eighth floor: a private infinity pool, screening room, and a chef’s kitchen that opens at midnight.' },
+  { id:'cabana', name:'Poolside Cabana Suite', img:`${IMG}/pool-deck.jpg`, tag:'Poolside',
+    size:'95 sqm', floor:'Level 6 · Deck', view:'Pool deck & palms', beds:'1 King · sun deck',
+    price:'KSh 198,000', desc:'Step straight from your linen sheets into the warm lap pool, with a shaded deck and outdoor rain shower.' }
+];
+
+const AMENITIES = [
+  { icon:'🏊', title:'Infinity Pool', desc:'A 32-metre heated lap pool on the sixth-floor deck, gold-lit at dusk with cabanas and a shaded bar.' },
+  { icon:'🕯', title:'Aurum Spa', desc:'Hammam, thermal suite and six treatment rooms using cold-pressed oils and gold-leaf rituals.' },
+  { icon:'🍽', title:'Fine Dining', desc:'Three kitchens under one cellar of 4,200 bottles — from tasting menu to midnight in-suite service.' },
+  { icon:'🏋', title:'Studio Floor', desc:'Technogym suites, a boxing ring, cold plunge and personal training from 05:00 until midnight.' },
+  { icon:'🛎', title:'Concierge', desc:'Twenty-four hour butlers, private drivers, gallery access and restaurant reservations across the city.' },
+  { icon:'🚁', title:'Helipad', desc:'Rooftop transfer from the airport in eleven minutes, with a car waiting on the forecourt below.' }
+];
+
+const MENU = {
+  starters:[
+    { n:'Oyster Trio, Gold Mignonette', d:'Coastal oysters, champagne shallot, gold leaf', p:'4,800' },
+    { n:'Torched Wagyu Tartare', d:'Hand-cut, smoked egg yolk, brioche crisp', p:'6,200' },
+    { n:'Roasted Bone Marrow', d:'Gremolata, sea salt, sourdough soldiers', p:'4,100' },
+    { n:'Heirloom Tomato & Burrata', d:'Basil oil, aged balsamic, pine nut crumb', p:'3,600' }
+  ],
+  mains:[
+    { n:'Dry-Aged Ribeye, 45 Days', d:'Charcoal, bone marrow jus, triple-cooked chips', p:'11,900' },
+    { n:'Line-Caught Red Snapper', d:'Saffron velouté, fennel, citrus beurre blanc', p:'8,400' },
+    { n:'Spiced Lamb Shoulder', d:'Slow-roast 12 hours, aubergine, harissa honey', p:'9,600' },
+    { n:'Wild Mushroom Risotto', d:'Aged parmesan, truffle, thyme oil', p:'6,900' }
+  ],
+  desserts:[
+    { n:'Gold Leaf Chocolate Sphere', d:'Valrhona 70%, hazelnut praline, gold', p:'3,900' },
+    { n:'Vanilla Bean Soufflé', d:'Madagascar vanilla, crème anglaise', p:'3,400' },
+    { n:'Pistachio & Rose Millefeuille', d:'Caramelised pastry, rose cream', p:'3,200' },
+    { n:'Champagne Granita', d:'Vintage brut, elderflower, gold sugar', p:'2,800' }
+  ],
+  cellar:[
+    { n:'Vintage Brut, 2012', d:'Champagne · France · by the glass', p:'5,400' },
+    { n:'Barolo Riserva, 2010', d:'Nebbiolo · Piedmont · bottle', p:'48,000' },
+    { n:'Kenyan Highlands Chardonnay', d:'Naivasha · bottle', p:'14,500' },
+    { n:'Aurum Reserve Cocktail', d:'Gold-infused cognac, honey, bitters', p:'3,900' }
+  ]
+};
+
+const TREATMENTS = [
+  { n:'Gold Leaf Ritual', d:'24-karat leaf wrap, warm oil massage and a scalp ceremony.', t:'120 min', p:'48,000' },
+  { n:'Hammam & Gommage', d:'Black soap, steam chamber and full-body exfoliation.', t:'90 min', p:'32,000' },
+  { n:'Deep Tissue Recovery', d:'Firm pressure for travel-weary muscles and long flights.', t:'75 min', p:'28,000' },
+  { n:'Couples’ Sanctuary', d:'Side-by-side massage, private steam and champagne.', t:'150 min', p:'86,000' },
+  { n:'Rose Quartz Facial', d:'Lymphatic lift, cold globes and hyaluronic veil.', t:'60 min', p:'26,000' },
+  { n:'Midnight Signature', d:'Our most requested ritual — candlelit, slow, silent.', t:'180 min', p:'96,000' }
+];
+
+const VENUES = [
+  { n:'The Grand Ballroom', d:'Pillared, chandeliered and divisible into three salons for up to 620 guests.', cap:'620 guests' },
+  { n:'The Gold Salon', d:'Intimate panelled room for seated dinners and private receptions.', cap:'120 guests' },
+  { n:'The Rooftop Terrace', d:'Open-air ceremonies above the skyline at golden hour.', cap:'240 guests' },
+  { n:'The Cellar Table', d:'A single table for twenty beneath 4,200 bottles.', cap:'20 guests' }
+];
+
+const TESTIMONIALS = [
+  { q:'They had the bath drawn, the jazz low and my favourite orchid in the room before I had reached the door.', n:'Amara O.', c:'Lagos, Nigeria', s:5 },
+  { q:'I have stayed in the great houses of Europe. This is the first that felt like it was waiting only for me.', n:'Henrik L.', c:'Copenhagen, Denmark', s:5 },
+  { q:'The suite was silent at forty-seven floors, and breakfast arrived exactly when I wanted it, without asking.', n:'Priya R.', c:'Mumbai, India', s:5 },
+  { q:'Our wedding weekend ran to the minute. The concierge solved three crises I never knew about.', n:'Sofia & Marco', c:'Milan, Italy', s:5 },
+  { q:'Gold leaf on the dessert, gold light on the marble. Utterly theatrical, never once vulgar.', n:'Charles W.', c:'London, United Kingdom', s:5 },
+  { q:'The helipad transfer saved a six-hour drive. That alone is worth every shilling.', n:'Daniel K.', c:'Nairobi, Kenya', s:5 }
+];
+
+const FOOT_COLS = [
+  { t:{en:'Accommodations',fr:'Chambres',sw:'Vyumba',ar:'الغرف'}, links:[
+    { l:{en:'Presidential Suite',fr:'Suite Présidentielle',sw:'Chumba Kikuu',ar:'الجناح الرئاسي'}, h:'#/rooms' },
+    { l:{en:'Terrace Suites',fr:'Suites Terrasse',sw:'Vyumba vya Roshani',ar:'أجنحة الشرفة'}, h:'#/rooms' },
+    { l:{en:'Sky Villas',fr:'Villas Ciel',sw:'Nyumba za Juu',ar:'فيلات السماء'}, h:'#/rooms' },
+    { l:{en:'Garden Residences',fr:'Résidences Jardin',sw:'Nyumba za Bustani',ar:'مساكن الحديقة'}, h:'#/rooms' },
+    { l:{en:'Long Stay',fr:'Long Séjour',sw:'Kukaa Muda Mrefu',ar:'إقامة طويلة'}, h:'#/rooms' }
+  ]},
+  { t:{en:'Experiences',fr:'Expériences',sw:'Uzoefu',ar:'التجارب'}, links:[
+    { l:{en:'The Gilded Table',fr:'La Table Dorée',sw:'Meza ya Dhahabu',ar:'المائدة الذهبية'}, h:'#/dining' },
+    { l:{en:'Aurum Bar',fr:'Bar Aurum',sw:'Baa ya Aurum',ar:'بار أوروم'}, h:'#/dining' },
+    { l:{en:'Spa & Hammam',fr:'Spa & Hammam',sw:'Spa na Hammam',ar:'السبا والحمام'}, h:'#/spa' },
+    { l:{en:'Weddings',fr:'Mariages',sw:'Harusi',ar:'حفلات الزفاف'}, h:'#/events' },
+    { l:{en:'Helipad Transfers',fr:'Transferts Hélicoptère',sw:'Usafiri wa Helikopta',ar:'التنقل بالمروحية'}, h:'#/contact' }
+  ]},
+  { t:{en:'Information',fr:'Information',sw:'Taarifa',ar:'معلومات'}, links:[
+    { l:{en:'Our Story',fr:'Notre Histoire',sw:'Historia Yetu',ar:'قصتنا'}, h:'#/' },
+    { l:{en:'Press & Awards',fr:'Presse & Prix',sw:'Vyombo vya Habari',ar:'الصحافة والجوائز'}, h:'#/' },
+    { l:{en:'Careers',fr:'Carrières',sw:'Kazi',ar:'وظائف'}, h:'#/contact' },
+    { l:{en:'Gift Certificates',fr:'Chèques Cadeaux',sw:'Vocha za Zawadi',ar:'قسائم الهدايا'}, h:'#/contact' },
+    { l:{en:'Privacy',fr:'Confidentialité',sw:'Faragha',ar:'الخصوصية'}, h:'#/contact' }
+  ]},
+  { t:{en:'Concierge',fr:'Conciergerie',sw:'Mhudumu',ar:'الاستقبال'}, links:[
+    { l:{en:'Message Us',fr:'Nous Écrire',sw:'Tutumie Ujumbe',ar:'راسلنا'}, wa:'fab' },
+    { l:{en:'Reserve a Suite',fr:'Réserver une Suite',sw:'Weka Chumba',ar:'احجز جناحاً'}, wa:'reserve-footer' },
+    { l:{en:'Dining Reservations',fr:'Réserver une Table',sw:'Weka Meza',ar:'حجز طاولة'}, h:'#/dining' },
+    { l:{en:'Spa Appointments',fr:'Rendez-vous Spa',sw:'Miadi ya Spa',ar:'مواعيد السبا'}, h:'#/spa' },
+    { l:{en:'Private Events',fr:'Événements Privés',sw:'Hafla Binafsi',ar:'فعاليات خاصة'}, h:'#/events' }
+  ]}
+];
+
+/* ============================================================
+   2 · UTILITIES
+   ============================================================ */
+const $  = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+const clamp = (v,a=0,b=1) => Math.min(b, Math.max(a, v));
+const lerp  = (a,b,t) => a + (b-a)*t;
+const smooth= t => t*t*(3-2*t);
+const rand  = (a,b) => a + Math.random()*(b-a);
+const money = n => 'KSh ' + n.toLocaleString('en-KE');
+
+const state = {
+  lang: localStorage.getItem('ag-lang') || 'en',
+  theme: localStorage.getItem('ag-theme') || 'obsidian',
+  motion: localStorage.getItem('ag-motion') !== '0',
+  sound:  localStorage.getItem('ag-sound') === '1',
+  bloom:  localStorage.getItem('ag-bloom') !== '0',
+  route:  '',
+  scroll: 0,       // smoothed scroll px
+  progress: 0,     // smoothed 0..1 page progress
+  wheel: 0,        // wheel inertia
+  mouse: { x:0, y:0 },
+  mouseNdc: { x:0, y:0 },
+  pointer: { x:999, y:999, z:0, set(x,y,z){ this.x=x; this.y=y; this.z=z; return this; } },
+  ready: false
+};
+const t = k => (I18N[state.lang] && I18N[state.lang][k]) || I18N.en[k] || k;
+const pick = o => (o && (o[state.lang] || o.en)) || '';
+
+/* ============================================================
+   3 · WHATSAPP LAYER  (number never appears in the DOM)
+   ============================================================ */
+const WA = {
+  link(msg){
+    return 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg);
+  },
+  open(key, extra){
+    const msg = WA.compose(key, extra);
+    const url = WA.link(msg);
+    let win = null;
+    try { win = window.open(url, '_blank', 'noopener,noreferrer'); } catch(e){ win = null; }
+    if(!win){                       // popup blocked → fall back to the hidden bridge
+      const a = $('#waBridge');
+      a.href = url;
+      a.click();
+    }
+    WA.toast(state.lang === 'ar'
+      ? 'جارٍ فتح واتساب…'
+      : (state.lang === 'fr' ? 'Ouverture de WhatsApp…'
+      : (state.lang === 'sw' ? 'Inafungua WhatsApp…' : 'Opening WhatsApp…')));
+  },
+  compose(key, x={}){
+    const L = state.lang;
+    const head = 'AURUM GRAND — ';
+    const lines = [];
+    switch(key){
+      case 'reserve-header':
+      case 'reserve-footer':
+        lines[0] = 'Hello AURUM GRAND, I would like to reserve a suite.';
+        lines[1] = 'Please share availability and your best rate.';
+        break;
+      case 'fab':
+        lines[0] = 'Hello AURUM GRAND — I would like to speak with the concierge.';
+        break;
+      case 'availability':
+        lines[0] = 'Hello AURUM GRAND, I would like to check availability.';
+        lines[1] = 'Check-in: '  + (x.in  || '—');
+        lines[2] = 'Check-out: ' + (x.out || '—');
+        lines[3] = 'Guests: '    + (x.guests || '2');
+        lines[4] = 'Suite: '     + (x.suite || 'Any suite');
+        break;
+      case 'suite':
+        lines[0] = 'Hello AURUM GRAND, I would like to reserve the ' + x.name + '.';
+        lines[1] = 'Rate: ' + x.price + ' per night';
+        if(x.in)  lines.push('Check-in: '  + x.in);
+        if(x.out) lines.push('Check-out: ' + x.out);
+        lines.push('Guests: ' + (x.guests || '2'));
+        break;
+      case 'dining':
+        lines[0] = 'Hello AURUM GRAND, I would like to reserve a table at ' + (x.venue || 'The Gilded Table') + '.';
+        lines[1] = 'Date: '   + (x.date || '—');
+        lines[2] = 'Time: '   + (x.time || '—');
+        lines[3] = 'Guests: ' + (x.guests || '2');
+        break;
+      case 'spa':
+        lines[0] = 'Hello AURUM GRAND, I would like to book a spa treatment.';
+        lines[1] = 'Treatment: ' + (x.name || '—');
+        lines[2] = 'Preferred: ' + (x.when || '—');
+        break;
+      case 'events':
+        lines[0] = 'Hello AURUM GRAND, I would like to enquire about a private event.';
+        lines[1] = 'Name: '  + (x.name || '—');
+        lines[2] = 'Email: ' + (x.email || '—');
+        lines[3] = 'Event: ' + (x.type || '—');
+        lines[4] = 'Guests: '+ (x.guests || '—');
+        lines[5] = 'Date: '  + (x.date || '—');
+        if(x.notes) lines.push('Notes: ' + x.notes);
+        break;
+      case 'contact':
+        lines[0] = 'Hello AURUM GRAND — ' + (x.name || 'a guest') + ' here.';
+        if(x.email) lines.push('Email: ' + x.email);
+        if(x.subject) lines.push('Subject: ' + x.subject);
+        if(x.notes) lines.push(x.notes);
+        break;
+      case 'newsletter':
+        lines[0] = 'Hello AURUM GRAND, please add me to your private list.';
+        lines[1] = 'Email: ' + (x.email || '—');
+        break;
+      default:
+        lines[0] = 'Hello AURUM GRAND.';
+    }
+    if(L === 'fr') lines.push('(Merci de me répondre en français.)');
+    if(L === 'sw') lines.push('(Tafadhali nijibu kwa Kiswahili.)');
+    if(L === 'ar') lines.push('(الرجاء الرد بالعربية.)');
+    return lines.join('\n');
+  },
+  toast(msg){
+    const el = $('#toast');
+    el.textContent = msg;
+    el.classList.add('on');
+    clearTimeout(WA._tt);
+    WA._tt = setTimeout(()=> el.classList.remove('on'), 2600);
+  }
+};
+document.addEventListener('click', (e)=>{
+  const el = e.target.closest('[data-wa]');
+  if(!el) return;
+  e.preventDefault();
+  const key = el.dataset.wa;
+  const extra = {};
+  if(el.dataset.suite) extra.name = el.dataset.suite;
+  if(el.dataset.price) extra.price = el.dataset.price;
+  if(el.dataset.venue) extra.venue = el.dataset.venue;
+  if(el.dataset.item)  extra.name  = el.dataset.item;
+  // pull dates from the closest form if present
+  const form = el.closest('form') || el.closest('.avail') || el.closest('[data-form]');
+  if(form){
+    const ci = form.querySelector('[name=in]'), co = form.querySelector('[name=out]');
+    const gs = form.querySelector('[name=guests]'), tm = form.querySelector('[name=time]');
+    if(ci && ci.value) extra.in = ci.value;
+    if(co && co.value) extra.out = co.value;
+    if(gs && gs.value) extra.guests = gs.value;
+    if(tm && tm.value) extra.time = tm.value;
+  }
+  WA.open(key, extra);
+});
+
+/* ============================================================
+   4 · TEMPLATES
+   ============================================================ */
+const stars = n => '★★★★★'.slice(0, n);
+const todayISO = () => new Date().toISOString().slice(0,10);
+const plusDays = d => { const x = new Date(); x.setDate(x.getDate()+d); return x.toISOString().slice(0,10); };
+
+function availCard(){
+  return `
+  <div class="avail" data-reveal>
+    <h4><span>${t('availTitle')}</span><i></i></h4>
+    <form id="availForm">
+      <div class="row">
+        <div class="field"><label>${t('checkIn')}</label><input type="date" name="in" value="${todayISO()}" min="${todayISO()}" required></div>
+        <div class="field"><label>${t('checkOut')}</label><input type="date" name="out" value="${plusDays(2)}" min="${plusDays(1)}" required></div>
+        <div class="field full"><label>${t('guests')}</label>
+          <select name="guests" class="av-sel">
+            <option value="1">1 ${t('guests').toLowerCase()}</option>
+            <option value="2" selected>2 ${t('guests').toLowerCase()}</option>
+            <option value="3">3 ${t('guests').toLowerCase()}</option>
+            <option value="4">4 ${t('guests').toLowerCase()}</option>
+            <option value="6">6 ${t('guests').toLowerCase()}</option>
+          </select>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-gold">${t('checkAvail')} <svg class="arw" width="15" height="15"><use href="#i-arrow"/></svg></button>
+      <p class="fineprint">Live with our concierge · No prepayment</p>
+    </form>
+  </div>`;
+}
+
+function testiMarkup(){
+  const items = TESTIMONIALS.map(x => `
+    <article class="quote">
+      <div class="stars">${stars(x.s)}</div>
+      <p>“${x.q}”</p>
+      <div class="who"><b>${x.n}</b> · ${x.c}</div>
+    </article>`).join('');
+  return items + items; // duplicated for a seamless 32s loop
+}
+
+function suiteCard(s, i){
+  return `
+  <article class="suite" data-reveal>
+    <div class="pic"><span class="tag">${s.tag}</span><img src="${s.img}" alt="${s.name}" loading="lazy" decoding="async"></div>
+    <div class="body">
+      <h3>${s.name}</h3>
+      <p class="desc">${s.desc}</p>
+      <div class="specs"><span>${s.size}</span><span>${s.floor}</span><span>${s.view}</span><span>${s.beds}</span></div>
+      <div class="foot">
+        <div class="price">${s.price}<small>${t('perNight')}</small></div>
+        <button class="btn btn-outline" data-wa="suite" data-suite="${s.name}" data-price="${s.price}">${t('bookSuite')}</button>
+      </div>
+    </div>
+  </article>`;
+}
+
+const PAGES = {
+
+  /* ---------------- HOME ---------------- */
+  home(){
+    const tiers = SUITES.slice(0,3).map(s => `
+      <div class="tier" data-reveal>
+        <div class="thumb"><img src="${s.img}" alt="${s.name}" loading="lazy" decoding="async"></div>
+        <div class="body">
+          <div class="name">${s.name}</div>
+          <div class="meta">${s.size} · ${s.floor}</div>
+          <div class="price">${s.price}<small>${t('perNight')}</small></div>
+          <button class="book" data-wa="suite" data-suite="${s.name}" data-price="${s.price}">${t('book')} →</button>
+        </div>
+      </div>`).join('');
+
+    const amen = AMENITIES.map((a,i) => `
+      <article class="amen" data-reveal>
+        <div class="icon">${a.icon}</div>
+        <h3>${a.title}</h3>
+        <p>${a.desc}</p>
+        <div class="idx">0${i+1} / 06</div>
+      </article>`).join('');
+
+    return `
+    <div class="page" data-page="home">
+
+      <!-- HERO -->
+      <section class="hero" id="hero">
+        <div class="hero-grid">
+          <div>
+            <span class="eyebrow">[ ${t('heroEyebrow')} ]</span>
+            <h1>${t('heroHead1')}<br><em>${t('heroHead2')}</em></h1>
+            <p class="lede sub">${t('heroSub')}</p>
+            <div class="hero-cta">
+              <a class="btn btn-outline" href="#/rooms">${t('explore')} <svg class="arw" width="15" height="15"><use href="#i-arrow"/></svg></a>
+              <a class="btn btn-ghost" href="#amenities">${t('viewAmenities')}</a>
+            </div>
+            <div class="hero-meta">
+              <div><b>124</b><span>Suites</span></div>
+              <div><b>47</b><span>Floors</span></div>
+              <div><b>1924</b><span>Est.</span></div>
+              <div><b>24/7</b><span>Butler</span></div>
+            </div>
+          </div>
+          <div>${availCard()}</div>
+        </div>
+        <div class="scroll-hint"><span class="track"></span><span>${t('scroll')}</span></div>
+      </section>
+
+      <!-- ROOMS -->
+      <section class="pad" id="rooms">
+        <div class="wrap">
+          <div class="rooms-grid">
+            <div class="rooms-left">
+              <span class="eyebrow" data-reveal>[ ${t('roomsEyebrow')} ]</span>
+              <h2 class="room-title" data-reveal>PRESIDENTIAL<br><span class="l2">SUITE</span></h2>
+              <p class="lede" style="max-width:44ch" data-reveal>${t('roomsText')}</p>
+              <div class="stats">
+                <div class="stat" data-reveal><div class="dot"></div><div class="num">01</div><h4>Altitude</h4><div class="big">47th Floor</div><p>Panoramic city views</p></div>
+                <div class="stat" data-reveal><div class="dot"></div><div class="num">02</div><h4>Suite Size</h4><div class="big">280 sqm</div><p>Double-height ceilings</p></div>
+                <div class="stat" data-reveal><div class="dot"></div><div class="num">03</div><h4>Butler</h4><div class="big">24/7</div><p>Dedicated personal service</p></div>
+              </div>
+              <div class="hero-cta" data-reveal style="margin-top:34px">
+                <a class="btn btn-gold" href="#/rooms">${t('explore')} <svg class="arw" width="15" height="15"><use href="#i-arrow"/></svg></a>
+                <button class="btn btn-ghost" data-wa="suite" data-suite="Presidential Suite" data-price="KSh 620,000">${t('bookSuite')}</button>
+              </div>
+            </div>
+            <div class="rooms-right">${tiers}</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- AMENITIES STRIP -->
+      <section class="pad" id="amenities">
+        <div class="wrap">
+          <div class="sec-head">
+            <div>
+              <span class="eyebrow" data-reveal>[ ${t('amenitiesEyebrow')} ]</span>
+              <h2 data-reveal>${t('amenitiesHead1')} <em>&amp; Service</em></h2>
+            </div>
+            <p class="lede" data-reveal>Six floors of quiet indulgence, open to every guest of the house.</p>
+          </div>
+        </div>
+        <div class="strip-wrap">
+          <div class="strip" id="amenStrip">${amen}</div>
+          <div class="strip-nav">
+            <button data-strip="-1" aria-label="Previous"><svg width="18" height="18" style="transform:rotate(180deg)"><use href="#i-chev"/></svg></button>
+            <button data-strip="1" aria-label="Next"><svg width="18" height="18"><use href="#i-chev"/></svg></button>
+          </div>
+        </div>
+      </section>
+
+      <!-- DINING -->
+      <section class="dining pad" id="dining">
+        <div class="bgimg" style="background-image:url('${IMG}/dining-room.jpg')"></div>
+        <div class="wrap">
+          <div class="dining-grid">
+            <div>
+              <span class="eyebrow" data-reveal>[ ${t('diningEyebrow')} ]</span>
+              <h2 class="dining-name" data-reveal>The <span>Gilded</span> Table</h2>
+              <p class="lede mt-sm" data-reveal style="max-width:38ch">${t('diningText')}</p>
+              <div class="hero-cta" data-reveal>
+                <a class="btn btn-outline" href="#/dining">See the menu <svg class="arw" width="15" height="15"><use href="#i-arrow"/></svg></a>
+                <button class="btn btn-ghost" data-wa="dining" data-venue="The Gilded Table">${t('bookTable')}</button>
+              </div>
+            </div>
+            <div>${menuTabs('home')}</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TESTIMONIALS -->
+      <section class="pad" id="reviews" style="padding-bottom:0">
+        <div class="wrap">
+          <div class="sec-head">
+            <div>
+              <span class="eyebrow" data-reveal>[ ${t('testimonialsEyebrow')} ]</span>
+              <h2 data-reveal>${t('testimonialsHead1')} <em>${t('testimonialsHead2')}</em></h2>
+            </div>
+          </div>
+        </div>
+        <div class="marquee"><div class="track">${testiMarkup()}</div></div>
+      </section>
+    </div>`;
+  },
+
+  /* ---------------- ROOMS ---------------- */
+  rooms(){
+    return `
+    <div class="page" data-page="rooms">
+      <section class="page-hero">
+        <div class="media"><img src="${IMG}/room-1.jpg" alt="Presidential Suite" fetchpriority="high"></div>
+        <div class="wrap">
+          <div class="crumb" data-reveal>AURUM GRAND / <b>Rooms &amp; Residences</b></div>
+          <h1 data-reveal>${t('roomsHead1')} <em>${t('roomsHead2')}</em></h1>
+          <p class="lede" data-reveal>${t('roomsText')}</p>
+        </div>
+      </section>
+
+      <section class="pad">
+        <div class="wrap">
+          <div class="sec-head">
+            <div><span class="eyebrow" data-reveal>[ ${t('roomsEyebrow')} ]</span>
+              <h2 data-reveal>Six ways <em>to stay</em></h2></div>
+            ${availCard()}
+          </div>
+          <div class="suites">${SUITES.map(suiteCard).join('')}</div>
+        </div>
+      </section>
+
+      <section class="pad" style="padding-top:0">
+        <div class="wrap">
+          <div class="stats" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
+            <div class="stat" data-reveal><div class="dot"></div><div class="num">01</div><h4>Altitude</h4><div class="big">47th Floor</div><p>Panoramic city views</p></div>
+            <div class="stat" data-reveal><div class="dot"></div><div class="num">02</div><h4>Suite Size</h4><div class="big">280 sqm</div><p>Double-height ceilings</p></div>
+            <div class="stat" data-reveal><div class="dot"></div><div class="num">03</div><h4>Butler</h4><div class="big">24/7</div><p>Dedicated personal service</p></div>
+            <div class="stat" data-reveal><div class="dot"></div><div class="num">04</div><h4>Turn-down</h4><div class="big">Twice daily</div><p>Linen pressed by hand</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="pad" style="padding-top:0">
+        <div class="wrap split">
+          <div class="frame" data-reveal><img src="${IMG}/room-3.jpg" alt="Royal Garden Residence" loading="lazy"></div>
+          <div>
+            <span class="eyebrow" data-reveal>[ Residences ]</span>
+            <h2 data-reveal style="font-family:var(--font-display);font-weight:900;font-size:clamp(30px,4.6vw,60px);line-height:.94;letter-spacing:-.03em;margin:14px 0 0">
+              Stay <em class="serif" style="color:var(--gold)">a season</em>, not a night.
+            </h2>
+            <p class="lede mt-sm" data-reveal>Residences from thirty nights include a dedicated house manager, pantry stocking, laundry, private dining and a car at the door each morning.</p>
+            <div class="hero-cta" data-reveal>
+              <button class="btn btn-gold" data-wa="suite" data-suite="Royal Garden Residence" data-price="KSh 510,000">${t('bookSuite')} <svg class="arw" width="15" height="15"><use href="#i-arrow"/></svg></button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>`;
+  },
+
+  /* ---------------- DINING ---------------- */
+  dining(){
+    return `
+    <div class="page" data-page="dining">
+      <section class="page-hero">
+        <div class="media"><img src="${IMG}/dining-room.jpg" alt="The Gilded Table" fetchpriority="high"></div>
+        <div class="wrap">
+          <div class="crumb" data-reveal>AURUM GRAND / <b>Fine Dining</b></div>
+          <h1 data-reveal>${t('diningHead1')} <em>${t('diningHead2')}</em></h1>
+          <p class="lede" data-reveal>${t('diningText')}</p>
+        </div>
+      </section>
+
+      <section class="dining pad">
+        <div class="bgimg" style="background-image:url('${IMG}/bar-lounge.jpg')"></div>
+        <div class="wrap">
+          <div class="dining-grid">
+            <div>
+              <span class="eyebrow" data-reveal>[ ${t('diningEyebrow')} ]</span>
+              <h2 class="dining-name" data-reveal>The <span>Gilded</span> Table</h2>
+              <p class="lede mt-sm" data-reveal style="max-width:38ch">Dinner served from 18:30. The tasting menu changes with the market, the coast and the moon.</p>
+              <div class="hero-cta" data-reveal>
+                <button class="btn btn-gold" data-wa="dining" data-venue="The Gilded Table">${t('bookTable')} <svg class="arw" width="15" height="15"><use href="#i-arrow"/></svg></button>
+              </div>
+            </div>
+            <div>${menuTabs('dining')}</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="pad">
+        <div class="wrap">
+          <div class="sec-head"><div><span class="eyebrow" data-reveal>[ The House ]</span><h2 data-reveal>Three <em>kitchens</em></h2></div></div>
+          <div class="cards3">
+            <div class="card" data-reveal><div class="k">01 · Signature</div><h4>The Gilded Table</h4><p>Nine-course tasting menu, gold leaf and a cellar of 4,200 bottles. Jackets preferred, never required.</p>
+              <div class="hero-cta" style="margin-top:16px"><button class="btn btn-outline" data-wa="dining" data-venue="The Gilded Table">${t('bookTable')}</button></div></div>
+            <div class="card" data-reveal><div class="k">02 · Bar</div><h4>Aurum Bar</h4><p>Backlit onyx, cognac flights and a pianist from nine until the last guest leaves.</p>
+              <div class="hero-cta" style="margin-top:16px"><button class="btn btn-outline" data-wa="dining" data-venue="Aurum Bar">${t('bookTable')}</button></div></div>
+            <div class="card" data-reveal><div class="k">03 · In-Suite</div><h4>Midnight Service</h4><p>The full menu, plated in your own dining room, at any hour you happen to be hungry.</p>
+              <div class="hero-cta" style="margin-top:16px"><button class="btn btn-outline" data-wa="dining" data-venue="In-Suite Dining">Order in-suite</button></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="pad" style="padding-top:0">
+        <div class="wrap split">
+          <div class="frame" data-reveal><img src="${IMG}/dish-1.jpg" alt="Signature plate at The Gilded Table" loading="lazy"></div>
+          <div>
+            <span class="eyebrow" data-reveal>[ The Cellar ]</span>
+            <h2 data-reveal style="font-family:var(--font-display);font-weight:900;font-size:clamp(30px,4.6vw,60px);line-height:.94;letter-spacing:-.03em;margin:14px 0 0">4,200 bottles. <em class="serif" style="color:var(--gold)">One key.</em></h2>
+            <p class="lede mt-sm" data-reveal>Bordeaux to Naivasha, decanted an hour before you sit. Our sommelier will pair your table for KSh 9,000 a head.</p>
+            <div class="hero-cta" data-reveal><button class="btn btn-outline" data-wa="dining" data-venue="Cellar Tasting">Reserve the cellar table</button></div>
+          </div>
+        </div>
+      </section>
+    </div>`;
+  },
+
+  /* ---------------- SPA ---------------- */
+  spa(){
+    const rows = TREATMENTS.map((x,i) => `
+      <div class="row-item" data-reveal>
+        <div class="num">0${i+1}</div>
+        <div><h4>${x.n}</h4><p>${x.d}</p></div>
+        <div class="right">KSh ${x.p}<small>${x.t}</small></div>
+      </div>`).join('');
+
+    return `
+    <div class="page" data-page="spa">
+      <section class="page-hero">
+        <div class="media"><img src="${IMG}/spa-treatment.jpg" alt="Aurum Spa" fetchpriority="high"></div>
+        <div class="wrap">
+          <div class="crumb" data-reveal>AURUM GRAND / <b>Aurum Spa</b></div>
+          <h1 data-reveal>The <em>Spa</em></h1>
+          <p class="lede" data-reveal>Steam, cold water, warm oil and silence — six treatment rooms built around a black stone thermal pool.</p>
+        </div>
+      </section>
+
+      <section class="pad">
+        <div class="wrap">
+          <div class="sec-head">
+            <div><span class="eyebrow" data-reveal>[ Rituals ]</span><h2 data-reveal>Treatments <em>&amp; rituals</em></h2></div>
+            <p class="lede" data-reveal>Open 06:00 – 23:00. Guests of the house receive priority booking.</p>
+          </div>
+          <div class="rows">${rows}</div>
+          <div class="hero-cta mt-md" data-reveal>
+            <button class="btn btn-gold" data-wa="spa" data-item="Gold Leaf Ritual">${t('bookTreatment')} <svg class="arw" width="15" height="15"><use href="#i-arrow"/></svg></button>
+          </div>
+        </div>
+      </section>
+
+      <section class="pad" style="padding-top:0">
+        <div class="wrap split">
+          <div>
+            <span class="eyebrow" data-reveal>[ The Thermal Suite ]</span>
+            <h2 data-reveal style="font-family:var(--font-display);font-weight:900;font-size:clamp(30px,4.6vw,60px);line-height:.94;letter-spacing:-.03em;margin:14px 0 0">Hot. Cold. <em class="serif" style="color:var(--gold)">Repeat.</em></h2>
+            <p class="lede mt-sm" data-reveal>Hammam, steam chamber, cold plunge, salt sauna and a quiet room with tea that nobody will interrupt.</p>
+            <div class="cards3 mt-md" style="grid-template-columns:1fr 1fr">
+              <div class="card" data-reveal><div class="k">01</div><h4>Hammam</h4><p>Black soap, steam and gommage on heated marble.</p></div>
+              <div class="card" data-reveal><div class="k">02</div><h4>Cold Plunge</h4><p>4°C, lit from below, with a warm towel waiting.</p></div>
+            </div>
+          </div>
+          <div class="frame" data-reveal><img src="${IMG}/amenity-spa.jpg" alt="Thermal pool" loading="lazy"></div>
+        </div>
+      </section>
+    </div>`;
+  },
+
+  /* ---------------- EVENTS ---------------- */
+  events(){
+    const rows = VENUES.map((v,i) => `
+      <div class="row-item" data-reveal>
+        <div class="num">0${i+1}</div>
+        <div><h4>${v.n}</h4><p>${v.d}</p></div>
+        <div class="right">${v.cap}<small>Capacity</small></div>
+      </div>`).join('');
+
+    return `
+    <div class="page" data-page="events">
+      <section class="page-hero">
+        <div class="media"><img src="${IMG}/events-ballroom.jpg" alt="The Grand Ballroom" fetchpriority="high"></div>
+        <div class="wrap">
+          <div class="crumb" data-reveal>AURUM GRAND / <b>Events</b></div>
+          <h1 data-reveal>Weddings <em>&amp; Celebrations</em></h1>
+          <p class="lede" data-reveal>One wedding at a time. One team, from the first visit to the last dance.</p>
+        </div>
+      </section>
+
+      <section class="pad">
+        <div class="wrap">
+          <div class="sec-head"><div><span class="eyebrow" data-reveal>[ Spaces ]</span><h2 data-reveal>Four <em>rooms</em>, one house</h2></div></div>
+          <div class="rows">${rows}</div>
+        </div>
+      </section>
+
+      <section class="pad" style="padding-top:0">
+        <div class="wrap split">
+          <div class="frame" data-reveal><img src="${IMG}/events-ballroom.jpg" alt="Ballroom" loading="lazy"></div>
+          <div>
+            <span class="eyebrow" data-reveal>[ Enquire ]</span>
+            <h2 data-reveal style="font-family:var(--font-display);font-weight:900;font-size:clamp(28px,4vw,52px);line-height:.96;letter-spacing:-.03em;margin:14px 0 0">Tell us the date. <em class="serif" style="color:var(--gold)">We'll do the rest.</em></h2>
+            <form class="form mt-md" id="eventForm" data-reveal>
+              <div class="two">
+                <div><label>${t('fullName')}</label><input name="name" required placeholder="Amina Wanjiru"></div>
+                <div><label>${t('email')}</label><input type="email" name="email" required placeholder="you@example.com"></div>
+              </div>
+              <div class="two">
+                <div><label>Event type</label>
+                  <select name="type"><option>Wedding</option><option>Reception</option><option>Conference</option><option>Private dinner</option><option>Celebration</option></select>
+                </div>
+                <div><label>${t('guests')}</label>
+                  <select name="guests"><option>Up to 20</option><option>20 – 60</option><option>60 – 120</option><option>120 – 240</option><option>240 – 620</option></select>
+                </div>
+              </div>
+              <div class="two">
+                <div><label>Date</label><input type="date" name="date" value="${plusDays(60)}"></div>
+                <div><label>Time</label><input type="time" name="time" value="18:00"></div>
+              </div>
+              <div><label>${t('message')}</label><textarea name="notes" placeholder="${t('yourStay')}"></textarea></div>
+              <button type="submit" class="btn btn-gold">${t('inquire')} <svg class="arw" width="15" height="15"><use href="#i-arrow"/></svg></button>
+              <p class="note">Sent straight to our events desk on WhatsApp</p>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>`;
+  },
+
+  /* ---------------- CONTACT ---------------- */
+  contact(){
+    return `
+    <div class="page" data-page="contact">
+      <section class="page-hero">
+        <div class="media"><img src="${IMG}/exterior-night.jpg" alt="AURUM GRAND at night" fetchpriority="high"></div>
+        <div class="wrap">
+          <div class="crumb" data-reveal>AURUM GRAND / <b>Contact</b></div>
+          <h1 data-reveal>Find <em>us</em></h1>
+          <p class="lede" data-reveal>Golden Mile, Upper Hill — eleven minutes from the airport by helicopter, twenty by car.</p>
+        </div>
+      </section>
+
+      <section class="pad">
+        <div class="wrap contact-grid">
+          <div>
+            <span class="eyebrow" data-reveal>[ ${t('concierge')} ]</span>
+            <h2 data-reveal style="font-family:var(--font-display);font-weight:900;font-size:clamp(28px,4vw,52px);line-height:.96;letter-spacing:-.03em;margin:14px 0 26px">Speak with <em class="serif" style="color:var(--gold)">the house</em></h2>
+
+            <div class="contact-item" data-reveal>
+              <div class="ic"><svg><use href="#i-wa"/></svg></div>
+              <div><h4>${t('concierge')}</h4><p>Available ${t('daily')}. Our concierge answers in under two minutes.</p>
+                <a class="act" data-wa="fab">${t('waCta')} <svg width="13" height="13"><use href="#i-arrow"/></svg></a></div>
+            </div>
+            <div class="contact-item" data-reveal>
+              <div class="ic"><svg><use href="#i-mail"/></svg></div>
+              <div><h4>${t('email')}</h4><p>reservations@aurumgrand.com</p>
+                <a class="act" href="mailto:reservations@aurumgrand.com">${t('emailCta')} <svg width="13" height="13"><use href="#i-arrow"/></svg></a></div>
+            </div>
+            <div class="contact-item" data-reveal>
+              <div class="ic"><svg><use href="#i-pin"/></svg></div>
+              <div><h4>${t('address')}</h4><p>Golden Mile, Upper Hill, Nairobi, Kenya</p></div>
+            </div>
+            <div class="contact-item" data-reveal>
+              <div class="ic"><svg><use href="#i-clock"/></svg></div>
+              <div><h4>${t('hours')}</h4><p>${t('daily')} · Check-in 15:00 · Check-out 12:00</p></div>
+            </div>
+          </div>
+
+          <div>
+            <form class="form" id="contactForm" data-reveal>
+              <div class="two">
+                <div><label>${t('fullName')}</label><input name="name" required placeholder="Your name"></div>
+                <div><label>${t('email')}</label><input type="email" name="email" required placeholder="you@example.com"></div>
+              </div>
+              <div class="two">
+                <div><label>Subject</label>
+                  <select name="subject"><option>Suite reservation</option><option>Dining</option><option>Spa</option><option>Events</option><option>Long stay</option><option>Other</option></select>
+                </div>
+                <div><label>${t('guests')}</label>
+                  <select name="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>6</option></select>
+                </div>
+              </div>
+              <div class="two">
+                <div><label>${t('checkIn')}</label><input type="date" name="in" value="${todayISO()}"></div>
+                <div><label>${t('checkOut')}</label><input type="date" name="out" value="${plusDays(2)}"></div>
+              </div>
+              <div><label>${t('message')}</label><textarea name="notes" placeholder="${t('yourStay')}"></textarea></div>
+              <button type="submit" class="btn btn-gold">${t('sendInquiry')} <svg class="arw" width="15" height="15"><use href="#i-arrow"/></svg></button>
+              <p class="note">Opens WhatsApp with your message ready to send</p>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section class="pad" style="padding-top:0">
+        <div class="wrap">
+          <div class="cards3">
+            <div class="card" data-reveal><div class="k">01</div><h4>Valet &amp; Parking</h4><p>Complimentary valet on the forecourt, with covered parking and EV charging beneath the tower.</p></div>
+            <div class="card" data-reveal><div class="k">02</div><h4>Airport Transfer</h4><p>A house car from JKIA in twenty minutes, or the rooftop in eleven.</p></div>
+            <div class="card" data-reveal><div class="k">03</div><h4>Accessibility</h4><p>Step-free throughout, with two adapted suites and pool hoist on request.</p></div>
+          </div>
+        </div>
+      </section>
+    </div>`;
+  }
+};
+
+function menuTabs(scope){
+  const cats = ['starters','mains','desserts','cellar'];
+  const labels = t('menuTabs');
+  const tabs = cats.map((c,i) => `<button class="tab${i===0?' on':''}" data-tab="${c}" data-scope="${scope}">${labels[i]}</button>`).join('');
+  const lists = cats.map((c,i) => `
+    <div class="menu-list" data-panel="${c}" data-scope="${scope}" style="${i===0?'':'display:none'}">
+      ${MENU[c].map((m,j) => `
+        <div class="menu-card">
+          <div class="medal">${'I'.repeat(Math.min(j+1,3))}</div>
+          <div><h4>${m.n}</h4><p>${m.d}</p></div>
+          <div class="price">KSh ${m.p}</div>
+        </div>`).join('')}
+    </div>`).join('');
+  return `<div data-reveal><div class="tabs">${tabs}</div>${lists}</div>`;
+}
+
+/* ============================================================
+   5 · UI SYSTEMS
+   ============================================================ */
+const ROUTES = [
+  { path:'/',       key:'home',    scene:'home' },
+  { path:'/rooms',  key:'rooms',   scene:'rooms' },
+  { path:'/dining', key:'dining',  scene:'dining' },
+  { path:'/spa',    key:'spa',     scene:'spa' },
+  { path:'/events', key:'events',  scene:'events' },
+  { path:'/contact',key:'contact', scene:'contact' }
+];
+
+function buildNav(){
+  const labels = t('nav');
+  const items = [
+    { h:'#/rooms',   l:labels[0] },
+    { h:'#/dining',  l:labels[1] },
+    { h:'#/spa',     l:labels[2] },
+    { h:'#/events',  l:labels[3] },
+    { h:'#/contact', l:labels[4] }
+  ];
+  $('#navMain').innerHTML = items.map(i => `<a href="${i.h}" data-route="${i.h}">${i.l}</a>`).join('');
+  $('#mobileNav').innerHTML = items.map(i => `<a href="${i.h}">${i.l}</a>`).join('') +
+    `<a href="#/" style="font-size:.55em;color:var(--gold);letter-spacing:.2em">HOME</a>`;
+}
+
+function buildFooter(){
+  $('#year').textContent = new Date().getFullYear();
+  const words = ['Golden Moments','Timeless Luxury','World Class Service','Reserve Your Stay'];
+  $('#footTicker').innerHTML = (words.map(w => `<span>${w}</span>`).join('') ).repeat(4);
+
+  $('#footCols').innerHTML = `
+    <div class="foot-brand">
+      <div class="mark"><svg width="22" height="22" style="color:var(--gold)"><use href="#i-crown"/></svg> AURUM GRAND</div>
+      <p>124 suites above the Golden Mile. A house of marble, brass and quiet service since 1924.</p>
+      <div class="hero-cta" style="margin-top:20px">
+        <button class="btn btn-outline" data-wa="fab">${t('chatConcierge')}</button>
+      </div>
+    </div>` +
+    FOOT_COLS.map(col => `
+      <div>
+        <h5>${pick(col.t)}</h5>
+        <ul>${col.links.map(l => l.wa
+          ? `<li><a href="#" data-wa="${l.wa}" style="cursor:pointer">${pick(l.l)}</a></li>`
+          : `<li><a href="${l.h}">${pick(l.l)}</a></li>`).join('')}</ul>
+      </div>`).join('');
+}
+
+function buildLangMenu(){
+  $('#langMenu').innerHTML = Object.keys(I18N).map(k =>
+    `<button data-lang="${k}" class="${k===state.lang?'on':''}"><span>${I18N[k].label}</span><span>${k.toUpperCase()}</span></button>`
+  ).join('');
+  $('#langCur').textContent = state.lang.toUpperCase();
+}
+
+function buildThemes(){
+  $('#themes').innerHTML = Object.values(THEMES).map(th => `
+    <button class="theme${th.id===state.theme?' on':''}" data-theme="${th.id}">
+      <span class="sw" style="background:${th.bg[0]}">
+        <b style="color:#${th.sphere.toString(16).padStart(6,'0')};background:#${th.sphere.toString(16).padStart(6,'0')}"></b>
+      </span>
+      <span class="txt"><strong>${th.name}</strong><span>${th.note}</span></span>
+      <svg class="check" width="17" height="17"><use href="#i-check"/></svg>
+    </button>`).join('');
+}
+
+function applyI18nStatic(){
+  $$('[data-i18n]').forEach(el => { const v = t(el.dataset.i18n); if(v) el.textContent = v; });
+  document.documentElement.lang = state.lang;
+  document.documentElement.dir = I18N[state.lang].dir;
+}
+
+/* ---------- reveal ---------- */
+let revealIO = null;
+function initReveal(root){
+  if(!('IntersectionObserver' in window)){
+    $$('[data-reveal]', root).forEach(el => el.classList.add('in'));
+    return;
+  }
+  if(revealIO) revealIO.disconnect();
+  revealIO = new IntersectionObserver((entries)=>{
+    entries.forEach(e => {
+      if(e.isIntersecting){ e.target.classList.add('in'); revealIO.unobserve(e.target); }
+    });
+  }, { threshold:0.12, rootMargin:'0px 0px -8% 0px' });
+
+  const nodes = $$('[data-reveal]', root);
+  // stagger children by their position inside a shared parent
+  const seen = new Map();
+  nodes.forEach(el => {
+    const p = el.parentElement;
+    const i = (seen.get(p) || 0); seen.set(p, i+1);
+    el.style.setProperty('--d', (i * 0.09).toFixed(2) + 's');
+    revealIO.observe(el);
+  });
+  // hero elements reveal immediately on load
+  requestAnimationFrame(()=>{
+    $$('.hero [data-reveal], .page-hero [data-reveal]', root).forEach((el,i)=>{
+      if(el.getBoundingClientRect().top < window.innerHeight * 0.95){
+        setTimeout(()=> el.classList.add('in'), 240 + i*90);
+      }
+    });
+  });
+}
+
+/* ---------- drawer & toggles ---------- */
+function setDrawer(open){
+  $('#drawer').classList.toggle('on', open);
+  $('#scrim').classList.toggle('on', open);
+  $('#drawer').setAttribute('aria-hidden', open ? 'false' : 'true');
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+function bindChrome(){
+  $('#drawerToggle').addEventListener('click', ()=> setDrawer(!$('#drawer').classList.contains('on')));
+  $('#drawerClose').addEventListener('click', ()=> setDrawer(false));
+  $('#scrim').addEventListener('click', ()=> setDrawer(false));
+  document.addEventListener('keydown', e => {
+    if(e.key === 'Escape'){ setDrawer(false); $('#mobileNav').classList.remove('on'); $('#burger').classList.remove('on'); }
+  });
+
+  $('#burger').addEventListener('click', ()=>{
+    $('#burger').classList.toggle('on');
+    $('#mobileNav').classList.toggle('on');
+    document.body.style.overflow = $('#mobileNav').classList.contains('on') ? 'hidden' : '';
+  });
+  $$('#mobileNav a').forEach(a => a.addEventListener('click', ()=>{
+    $('#mobileNav').classList.remove('on'); $('#burger').classList.remove('on');
+    document.body.style.overflow = '';
+  }));
+
+  // language pill
+  const pill = $('#langPill');
+  pill.addEventListener('click', e => {
+    if(e.target.closest('[data-lang]')) return;
+    pill.classList.toggle('open');
+    pill.setAttribute('aria-expanded', pill.classList.contains('open'));
+  });
+  $('#langMenu').addEventListener('click', e => {
+    const b = e.target.closest('[data-lang]');
+    if(!b) return;
+    state.lang = b.dataset.lang;
+    localStorage.setItem('ag-lang', state.lang);
+    pill.classList.remove('open');
+    buildLangMenu(); buildNav(); buildFooter(); applyI18nStatic();
+    render(state.route, true);
+  });
+  document.addEventListener('click', e => { if(!e.target.closest('#langPill')) pill.classList.remove('open'); });
+
+  // theme buttons
+  $('#themes').addEventListener('click', e => {
+    const b = e.target.closest('[data-theme]');
+    if(!b) return;
+    setTheme(b.dataset.theme);
+  });
+
+  const toggle = (id, key, onChange) => {
+    const el = $(id);
+    el.classList.toggle('on', !!state[key]);
+    el.addEventListener('click', ()=>{
+      state[key] = !state[key];
+      localStorage.setItem('ag-' + key, state[key] ? '1' : '0');
+      el.classList.toggle('on', state[key]);
+      onChange && onChange(state[key]);
+    });
+  };
+  toggle('#tgMotion', 'motion', v => { if(engine.current) engine.current.motion = v; });
+  toggle('#tgSound',  'sound',  v => { if(v) Audio.init(); });
+  toggle('#tgBloom',  'bloom',  v => { engine.bloom = v; });
+
+  $('#orbCTA').addEventListener('click', ()=> WA.open('reserve-footer'));
+
+  // menu tabs (delegated once for the whole app)
+  document.addEventListener('click', e => {
+    const tab = e.target.closest('.tab');
+    if(!tab) return;
+    const scope = tab.dataset.scope;
+    $$('.tab').forEach(x => { if(x.dataset.scope === scope) x.classList.remove('on'); });
+    tab.classList.add('on');
+    $$('[data-panel]').forEach(p => {
+      if(p.dataset.scope !== scope) return;
+      p.style.display = (p.dataset.panel === tab.dataset.tab) ? '' : 'none';
+    });
+  });
+
+  // header solid on scroll
+  const onScroll = () => {
+    $('#top').classList.toggle('solid', window.scrollY > 40);
+  };
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+}
+
+/* ---------- in-page interactions (delegated, re-bind safe) ---------- */
+function bindPage(){
+  // amenity strip arrows
+  $$('[data-strip]').forEach(btn => btn.addEventListener('click', ()=>{
+    const strip = $('#amenStrip'); if(!strip) return;
+    const card = strip.querySelector('.amen');
+    const step = card ? card.offsetWidth + 18 : 340;
+    strip.scrollBy({ left: step * Number(btn.dataset.strip), behavior:'smooth' });
+  }));
+
+  // page hero in-view (parallax zoom)
+  $$('.page-hero, .dining').forEach(el => {
+    if('IntersectionObserver' in window){
+      new IntersectionObserver((es)=> es.forEach(x => x.isIntersecting && el.classList.add('in-view')), { threshold:0.05 }).observe(el);
+    } else el.classList.add('in-view');
+  });
+}
+
+/* ---------- forms ---------- */
+document.addEventListener('submit', e => {
+  const form = e.target;
+  const val = n => (form.querySelector('[name='+n+']') || {}).value || '';
+
+  if(form.id === 'availForm'){
+    e.preventDefault();
+    const inn = val('in'), out = val('out');
+    if(inn && out && out <= inn){
+      WA.toast('Check-out must be after check-in');
+      return;
+    }
+    WA.open('availability', { in:inn, out:out, guests:val('guests'), suite:t('anySuite') });
+  }
+  if(form.id === 'contactForm'){
+    e.preventDefault();
+    WA.open('contact', { name:val('name'), email:val('email'), subject:val('subject'), notes:val('notes') });
+  }
+  if(form.id === 'eventForm'){
+    e.preventDefault();
+    WA.open('events', { name:val('name'), email:val('email'), type:val('type'), guests:val('guests'), date:val('date'), time:val('time'), notes:val('notes') });
+  }
+});
+
+/* ============================================================
+   6 · THEME
+   ============================================================ */
+function setTheme(id){
+  state.theme = THEMES[id] ? id : 'obsidian';
+  const th = THEMES[state.theme];
+  localStorage.setItem('ag-theme', state.theme);
+  document.documentElement.dataset.theme = state.theme;
+  const layers = [$('#bgL1'), $('#bgL2'), $('#bgL3')];
+  layers.forEach((l,i)=> l.style.background = th.bg[i]);
+  document.documentElement.style.setProperty('--sphere', '#' + th.sphere.toString(16).padStart(6,'0'));
+  document.documentElement.style.setProperty('--sphere-2', '#' + th.pearl.toString(16).padStart(6,'0'));
+  document.documentElement.style.setProperty('--gold', th.accent);
+  $$('#themes .theme').forEach(b => b.classList.toggle('on', b.dataset.theme === state.theme));
+  if(engine.current && engine.current.applyTheme) engine.current.applyTheme(th);
+}
+
+/* ============================================================
+   7 · ROUTER
+   ============================================================ */
+function currentPath(){
+  const h = location.hash.replace(/^#/, '');
+  if(!h || h === '/') return '/';
+  return h.split('?')[0];
+}
+
+function render(path, keepScroll){
+  const route = ROUTES.find(r => r.path === path) || ROUTES[0];
+  state.route = route.path;
+  const app = $('#app');
+  app.innerHTML = PAGES[route.key]();
+  $$('[data-route]').forEach(a => a.classList.toggle('active', a.dataset.route === '#' + route.path));
+
+  if(!keepScroll) window.scrollTo({ top:0, behavior:'auto' });
+  initReveal(app);
+  bindPage();
+  setPhoto(route.key);
+  // reset scroll-driven background
+  morphBackground(0);
+  engine.build(route.scene);
+  document.title = route.key === 'home'
+    ? 'AURUM GRAND — Where every moment is golden.'
+    : ('AURUM GRAND — ' + route.key.charAt(0).toUpperCase() + route.key.slice(1));
+}
+
+window.addEventListener('hashchange', ()=> render(currentPath()));
+
+/* ============================================================
+   8 · SCROLL-DRIVEN BACKGROUND MORPH
+   ============================================================ */
+let photoOn = false, photoOp = 0;
+function setPhoto(routeKey){
+  photoOn = (routeKey === 'home');
+  if(photoOn) $('#photoLayerImg').src = IMG + '/hero-suite.jpg';
+}
+function morphBackground(p){
+  const o2 = smooth(clamp(p / 0.45));
+  const o3 = smooth(clamp((p - 0.45) / 0.55));
+  $('#bgL2').style.opacity = o2.toFixed(3);
+  $('#bgL3').style.opacity = o3.toFixed(3);
+  // the suite photograph holds the hero, then dissolves into the gradient
+  const target = photoOn ? clamp(1 - p * 2.8) * 0.66 : 0;
+  photoOp = lerp(photoOp, target, 0.08);
+  $('#photoLayer').style.opacity = photoOp.toFixed(3);
+}
+
+/* ============================================================
+   9 · AUDIO (crystal clink — opt-in)
+   ============================================================ */
+const Audio = {
+  ctx:null, ready:false,
+  init(){
+    if(this.ready) return;
+    try{
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if(!AC) return;
+      this.ctx = new AC();
+      this.ready = true;
+    }catch(e){ /* audio unavailable */ }
+  },
+  clink(vol=0.25){
+    if(!state.sound || !this.ready || !this.ctx) return;
+    if(this.ctx.state === 'suspended') this.ctx.resume();
+    const t0 = this.ctx.currentTime;
+    const base = rand(1400, 2600);
+    [1, 2.41, 3.83].forEach((m, i) => {
+      const o = this.ctx.createOscillator();
+      const g = this.ctx.createGain();
+      o.type = 'sine';
+      o.frequency.value = base * m;
+      g.gain.setValueAtTime(0, t0);
+      g.gain.linearRampToValueAtTime(vol / (i+1.6), t0 + 0.004);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.34);
+      o.connect(g); g.connect(this.ctx.destination);
+      o.start(t0); o.stop(t0 + 0.36);
+    });
+  }
+};
+
+/* ============================================================
+   10 · WEBGL ENGINE
+   ============================================================ */
+const V = THREE ? THREE.Vector3 : function(x,y,z){ return {x:x||0,y:y||0,z:z||0}; };
+const TAU = Math.PI * 2;
+const reduced = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+function goldMat(th, extra={}){
+  return new THREE.MeshPhysicalMaterial(Object.assign({
+    color: th.sphere, metalness:0.9, roughness:0.05,
+    clearcoat:1.0, clearcoatRoughness:0.04, envMapIntensity:1.9
+  }, extra));
+}
+function pearlMat(th, extra={}){
+  return new THREE.MeshPhysicalMaterial(Object.assign({
+    color: th.pearl, metalness:0.55, roughness:0.12,
+    clearcoat:1.0, clearcoatRoughness:0.06, envMapIntensity:1.6
+  }, extra));
+}
+function iridMat(th, extra={}){
+  return new THREE.MeshPhysicalMaterial(Object.assign({
+    color:0xffffff, roughness:0.86, metalness:0.0,
+    clearcoat:0.35, clearcoatRoughness:0.55,
+    iridescence:1.0, iridescenceIOR:1.5,
+    iridescenceThicknessRange:[120, 760],
+    sheen:0.7, sheenColor:new THREE.Color(0xdfe7ff), envMapIntensity:1.2
+  }, extra));
+}
+function addMotes(scene, count, color, spread=16){
+  const g = new THREE.BufferGeometry();
+  const pos = new Float32Array(count*3);
+  const spd = new Float32Array(count);
+  for(let i=0;i<count;i++){
+    pos[i*3]   = rand(-spread, spread);
+    pos[i*3+1] = rand(-spread*0.6, spread*0.6);
+    pos[i*3+2] = rand(-spread*0.5, spread*0.5);
+    spd[i] = rand(0.15, 0.6);
+  }
+  g.setAttribute('position', new THREE.BufferAttribute(pos,3));
+  const m = new THREE.PointsMaterial({
+    color, size:0.055, transparent:true, opacity:0.7,
+    blending:THREE.AdditiveBlending, depthWrite:false, sizeAttenuation:true
+  });
+  const pts = new THREE.Points(g, m);
+  scene.add(pts);
+  return { pts, spd, m };
+}
+function disposeScene(obj){
+  obj.traverse(o => {
+    if(o.geometry) o.geometry.dispose();
+    if(o.material){
+      (Array.isArray(o.material) ? o.material : [o.material]).forEach(m => {
+        for(const k in m){ const v = m[k]; if(v && v.isTexture) v.dispose(); }
+        m.dispose();
+      });
+    }
+  });
+}
+
+const engine = {
+  ok:false, renderer:null, camera:null, env:null, clock:null,
+  current:null, composer:null, renderPass:null, bloom:true, time:0,
+
+  init(){
+    const canvas = $('#scene');
+    try{
+      this.renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true, powerPreference:'high-performance' });
+    }catch(e){ return false; }
+    if(!this.renderer) return false;
+    this.ok = true;
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    this.renderer.toneMappingExposure = 1.12;
+    this.renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+    this.camera = new THREE.PerspectiveCamera(42, window.innerWidth/window.innerHeight, 0.1, 300);
+    this.camera.position.set(0, 0, 20);
+    this.clock = new THREE.Clock();
+    this.bloom = state.bloom;
+
+    try{
+      const pmrem = new THREE.PMREMGenerator(this.renderer);
+      pmrem.compileEquirectangularShader();
+      this.env = pmrem.fromScene(new RoomEnvironment(this.renderer), 0.04).texture;
+      pmrem.dispose();
+    }catch(e){ this.env = null; }
+
+    this.initComposer();
+    this.bindEvents();
+    this.loop();
+    return true;
+  },
+
+  async initComposer(){
+    if(!this.ok || !THREE_BASE) return;
+    const base = THREE_BASE === 'addons'
+      ? 'three/addons/postprocessing/'
+      : THREE_BASE + '/examples/jsm/postprocessing/';
+    try{
+      const [C, R, B, O] = await Promise.all([
+        import(base + 'EffectComposer.js'),
+        import(base + 'RenderPass.js'),
+        import(base + 'UnrealBloomPass.js'),
+        import(base + 'OutputPass.js')
+      ]);
+      const scene = new THREE.Scene();
+      this.composer = new C.EffectComposer(this.renderer);
+      this.renderPass = new R.RenderPass(scene, this.camera);
+      this.composer.addPass(this.renderPass);
+      const bloom = new B.UnrealBloomPass(
+        new THREE.Vector2(window.innerWidth, window.innerHeight), 0.62, 0.85, 0.28
+      );
+      this.composer.addPass(bloom);
+      this.composer.addPass(new O.OutputPass());
+      this.composer.setSize(window.innerWidth, window.innerHeight);
+      if(this.current) this.renderPass.scene = this.current.scene;
+    }catch(e){ this.composer = null; }
+  },
+
+  bindEvents(){
+    window.addEventListener('resize', ()=>{
+      if(!this.ok) return;
+      const w = window.innerWidth, h = window.innerHeight;
+      this.camera.aspect = w/h; this.camera.updateProjectionMatrix();
+      this.renderer.setSize(w,h);
+      if(this.composer) this.composer.setSize(w,h);
+      if(this.current && this.current.resize) this.current.resize(w,h);
+    });
+    window.addEventListener('pointermove', e => {
+      state.mouse.set(e.clientX, e.clientY);
+      state.mouseNdc.set((e.clientX/window.innerWidth)*2-1, -(e.clientY/window.innerHeight)*2+1);
+    }, { passive:true });
+    window.addEventListener('wheel', e => {
+      state.wheel = clamp(state.wheel + e.deltaY * 0.0016 * WHEEL_MULT, -1.4, 1.4);
+    }, { passive:true });
+    window.addEventListener('pointerdown', ()=>{ if(state.sound) Audio.init(); }, { once:false });
+    document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) this.clock.getDelta(); });
+  },
+
+  build(name){
+    if(!this.ok) return;
+    if(this.current){
+      if(this.current.dispose) this.current.dispose();
+      disposeScene(this.current.scene);
+      this.current = null;
+    }
+    const builder = SCENES[name] || SCENES.home;
+    const th = THEMES[state.theme];
+    this.current = builder(th);
+    this.current.motion = state.motion;
+    if(this.renderPass) this.renderPass.scene = this.current.scene;
+    if(this.current.scene) this.current.scene.environment = this.env;
+  },
+
+  loop(){
+    const tick = ()=>{
+      requestAnimationFrame(tick);
+      if(!this.ok) return;
+      const dt = Math.min(this.clock.getDelta(), 0.05);
+      this.time += dt;
+
+      // ---- scroll physics (weighty LERP) ----
+      const docH = Math.max(document.body.scrollHeight - window.innerHeight, 1);
+      const target = clamp(window.scrollY / docH);
+      state.scroll  = lerp(state.scroll, window.scrollY, LERP);
+      state.progress = lerp(state.progress, target, LERP);
+      state.wheel *= 0.92;
+      morphBackground(state.progress);
+
+      // ---- pointer in world space on the z=0 plane ----
+      const vh = 2 * Math.tan((this.camera.fov * Math.PI/180)/2) * Math.abs(this.camera.position.z);
+      const vw = vh * this.camera.aspect;
+      state.pointer.set(state.mouseNdc.x * vw/2, state.mouseNdc.y * vh/2, 0);
+
+      // ---- camera: slow parallax + wheel drift ----
+      const cam = this.camera;
+      const cz = this.current && this.current.camZ ? this.current.camZ : 20;
+      cam.position.x = lerp(cam.position.x, state.mouseNdc.x * 0.85, 0.045);
+      cam.position.y = lerp(cam.position.y, state.mouseNdc.y * 0.55 - state.wheel * 0.9, 0.045);
+      cam.position.z = lerp(cam.position.z, cz + state.wheel * 0.5, 0.05);
+      cam.lookAt(0, state.wheel * -0.35, 0);
+
+      if(this.current && this.current.update) this.current.update(dt, this.time);
+
+      if(this.bloom && this.composer) this.composer.render(dt);
+      else if(this.current) this.renderer.render(this.current.scene, this.camera);
+    };
+    tick();
+  }
+};
+
+/* ---------- shared helpers for scenes ---------- */
+function pointLights(scene, th, count=3, intensity=110){
+  const lights = [];
+  const palette = [th.sphere, th.pearl, 0xFFE9B8];
+  for(let i=0;i<count;i++){
+    const l = new THREE.PointLight(palette[i % palette.length], intensity, 46, 2);
+    scene.add(l);
+    lights.push({ l, a: (i/count)*TAU, r: 4.2 + i*1.4, s: 0.22 + i*0.08, y: 1.6 + i*1.1 });
+  }
+  return lights;
+}
+function shimmer(lights, time){
+  lights.forEach((o,i) => {
+    const a = o.a + time * o.s;
+    o.l.position.set(Math.cos(a)*o.r, o.y + Math.sin(time*0.7 + i)*0.9, Math.sin(a)*o.r*0.55 + 2);
+    o.l.intensity = 90 + Math.sin(time*1.7 + i*2.1) * 38;
+  });
+}
+function repulse(pos, out){
+  const dx = pos.x - state.pointer.x, dy = pos.y - state.pointer.y;
+  const d = Math.hypot(dx, dy);
+  if(d < REPULSE_RADIUS && d > 0.0001){
+    const f = (REPULSE_RADIUS - d) * REPULSE_STRENGTH;
+    out.x += (dx/d) * f;
+    out.y += (dy/d) * f;
+  }
+  return out;
+}
+function attract(pos, out, strength=0.012){
+  const dx = state.pointer.x - pos.x, dy = state.pointer.y - pos.y;
+  const d = Math.hypot(dx, dy);
+  if(d < 9 && d > 0.0001){
+    const f = strength * (1 - d/9);
+    out.x += dx/d * f;
+    out.y += dy/d * f;
+  }
+  return out;
+}
+
+/* ============================================================
+   11 · SCENES
+   ============================================================ */
+const SCENES = {};
+
+/* ------------------------------------------------------------
+   HOME — 96 glossy spheres: chandelier → bounce → crown → spiral
+   ------------------------------------------------------------ */
+SCENES.home = function(th){
+  const scene = new THREE.Scene();
+  const group = new THREE.Group(); scene.add(group);
+  const N = SPHERE_COUNT;
+
+  const matGold = goldMat(th);
+  const matPearl = pearlMat(th);
+  const geos = [
+    new THREE.SphereGeometry(0.36, 32, 32),
+    new THREE.SphereGeometry(0.26, 24, 24),
+    new THREE.SphereGeometry(0.17, 20, 20)
+  ];
+
+  /* --- formations --- */
+  const chand = [], crown = [];
+  const tiers = [{y:3.6,r:5.2},{y:1.7,r:4.3},{y:0.1,r:3.2},{y:-1.6,r:2.0}];
+  const perTier = N / 4;
+  for(let i=0;i<N;i++){
+    const tier = tiers[i % 4];
+    const a = (Math.floor(i/4) / perTier) * TAU + (i % 4) * 0.30;
+    chand.push(new V(Math.cos(a)*tier.r, tier.y, Math.sin(a)*tier.r*0.34));
+  }
+  const peaks = [-3.6,-1.8,0,1.8,3.6], heights = [1.35,2.25,3.0,2.25,1.35], PW = 0.98;
+  const nBand = Math.floor(N*0.32);
+  for(let i=0;i<N;i++){
+    if(i < nBand){
+      const u = i / Math.max(nBand-1,1);
+      crown.push(new V(lerp(-4.5,4.5,u), -2.0 + (i%2)*0.52, ((i%3)-1)*0.3));
+    } else {
+      const j = i - nBand, total = N - nBand;
+      const k = j % 5, side = Math.floor(j/5) % 2;
+      const u = clamp((Math.floor(j/5) / Math.max(total/5,1)) * 1.06);
+      const px = peaks[k], py = heights[k];
+      const x = side === 0 ? lerp(px - PW, px, u) : lerp(px, px + PW, u);
+      const y = side === 0 ? lerp(-2.0, py, u)    : lerp(py, -2.0, u);
+      crown.push(new V(x, y, ((j%3)-1)*0.24));
+    }
+  }
+
+  /* --- spheres (sweep in from offscreen) --- */
+  const balls = [];
+  for(let i=0;i<N;i++){
+    const gi = i % 3;
+    const mesh = new THREE.Mesh(geos[gi], (i % 10 < 7) ? matGold : matPearl);
+    const r = [0.36,0.26,0.17][gi];
+    const side = i % 2 === 0 ? -1 : 1;
+    mesh.position.set(side * rand(22, 40), rand(-7, 9), rand(-9, 9));
+    group.add(mesh);
+    balls.push({
+      mesh, r,
+      vel: new V(rand(-0.4,0.4), rand(-0.2,0.2), rand(-0.2,0.2)),
+      off: new V(),
+      f: rand(0, TAU),
+      s: rand(0.6, 1.4),
+      spiralT: i / N
+    });
+  }
+
+  /* --- marble floor (revealed during the bounce phase) --- */
+  const floorMat = new THREE.MeshStandardMaterial({
+    color:0x0b0806, metalness:0.42, roughness:0.2,
+    transparent:true, opacity:0, envMapIntensity:0.9
+  });
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(70,70), floorMat);
+  floor.rotation.x = -Math.PI/2;
+  floor.position.y = FLOOR_Y;
+  scene.add(floor);
+
+  /* --- light --- */
+  scene.add(new THREE.AmbientLight(0x2b1d0c, 1.1));
+  const dir = new THREE.DirectionalLight(0xFFF0D0, 1.15);
+  dir.position.set(5, 9, 7); scene.add(dir);
+  const lights = pointLights(scene, th, 3, 105);
+  const motes = addMotes(scene, 420, th.sphere, 18);
+
+  let phase = 0;
+  const tmp = new V();
+
+  return {
+    scene, camZ:20, motion:state.motion,
+    applyTheme(nth){
+      matGold.color.set(nth.sphere);
+      matPearl.color.set(nth.pearl);
+      motes.m.color.set(nth.sphere);
+      lights.forEach((o,i) => o.l.color.set(i % 3 === 1 ? nth.pearl : nth.sphere));
+    },
+    update(dt, time){
+      const p = state.progress;
+      const next = p < 0.24 ? 0 : (p < 0.48 ? 1 : (p < 0.76 ? 2 : 3));
+      if(next !== phase){
+        if(next === 1 && phase === 0){
+          balls.forEach(b => b.vel.set(rand(-0.7,0.7), rand(-1.4,-0.1), rand(-0.4,0.4)));
+        }
+        if(next === 3) balls.forEach(b => b.spiralT = (b.spiralT % 1));
+        phase = next;
+      }
+
+      const kf = 1 - Math.pow(1 - LERP, dt * 60);
+      const moving = this.motion !== false && !reduced;
+
+      for(let i=0;i<N;i++){
+        const b = balls[i], pos = b.mesh.position;
+
+        if(phase === 0){
+          const c = chand[i];
+          tmp.set(
+            c.x + (moving ? Math.cos(time*0.42 + b.f)*0.09 : 0),
+            c.y + (moving ? Math.sin(time*0.55 + b.f)*0.17 : 0),
+            c.z
+          );
+          repulse(tmp, b.off);
+          b.off.multiplyScalar(0.90);
+          tmp.add(b.off);
+          pos.lerp(tmp, kf * (moving ? 1 : 2.6));
+          b.mesh.scale.setScalar(1);
+        }
+        else if(phase === 1){
+          if(moving){
+            b.vel.y -= 8.6 * dt;                       // gravity
+            b.vel.multiplyScalar(1 - 0.32 * dt);       // air drag (weighty, not rubbery)
+            repulse(pos, b.off);
+            b.off.multiplyScalar(0.88);
+            if(b.off.lengthSq() > 0){
+              b.vel.x += b.off.x * 5.2 * dt * 60 * 0.016;
+              b.vel.y += b.off.y * 5.2 * dt * 60 * 0.016;
+            }
+            pos.addScaledVector(b.vel, dt);
+            if(pos.y < FLOOR_Y + b.r){
+              pos.y = FLOOR_Y + b.r;
+              b.vel.y = Math.min(Math.abs(b.vel.y) * RESTITUTION, 5.2);
+              b.vel.x *= 0.86; b.vel.z *= 0.86;
+              if(b.vel.y < 0.45) b.vel.y = 0;
+            }
+            if(Math.abs(pos.x) > 10){ pos.x = Math.sign(pos.x)*10; b.vel.x *= -0.55; }
+            if(Math.abs(pos.z) > 6){  pos.z = Math.sign(pos.z)*6;  b.vel.z *= -0.55; }
+          }
+          b.mesh.scale.setScalar(1);
+        }
+        else if(phase === 2){
+          const c = crown[i];
+          tmp.set(c.x, c.y + (moving ? Math.sin(time*0.7 + b.f)*0.07 : 0), c.z);
+          repulse(tmp, b.off);
+          b.off.multiplyScalar(0.90);
+          tmp.add(b.off);
+          pos.lerp(tmp, kf * 1.15);
+          b.mesh.scale.setScalar(1);
+        }
+        else {
+          b.spiralT = (b.spiralT + dt * 0.055 * (moving ? 1 : 0)) % 1;
+          const tt = b.spiralT;
+          const ang = tt * Math.PI * 5.2 + i * 0.19;
+          const rad = lerp(4.9, 0.55, tt);
+          pos.set(Math.cos(ang)*rad, lerp(FLOOR_Y, 15.5, tt), Math.sin(ang)*rad*0.55);
+          const fade = smooth(clamp(Math.min(tt, 1-tt) / 0.1));
+          b.mesh.scale.setScalar(0.35 + fade*0.65);
+        }
+      }
+
+      floorMat.opacity = lerp(floorMat.opacity, phase === 1 ? 0.92 : 0.0, 0.05);
+      floor.visible = floorMat.opacity > 0.01;
+
+      if(moving){
+        shimmer(lights, time);
+        group.rotation.y = lerp(group.rotation.y, Math.sin(time*0.07)*0.16 + state.mouseNdc.x*0.1, 0.03);
+        const arr = motes.pts.geometry.attributes.position.array;
+        for(let i=0;i<motes.spd.length;i++){
+          arr[i*3+1] += motes.spd[i] * dt * 0.6;
+          if(arr[i*3+1] > 11) arr[i*3+1] = -11;
+          arr[i*3] += Math.sin(time*0.3 + i*0.7) * dt * 0.12;
+        }
+        motes.pts.geometry.attributes.position.needsUpdate = true;
+      }
+    }
+  };
+};
+
+/* ------------------------------------------------------------
+   ROOMS — key fobs orbiting a glowing orb → floor-plan grid
+   ------------------------------------------------------------ */
+SCENES.rooms = function(th){
+  const scene = new THREE.Scene();
+  const group = new THREE.Group(); scene.add(group);
+
+  const matGold = goldMat(th);
+  const matPearl = pearlMat(th, { metalness:0.85, roughness:0.14 });
+
+  /* central glowing orb */
+  const core = new THREE.Mesh(
+    new THREE.SphereGeometry(1.55, 48, 48),
+    new THREE.MeshStandardMaterial({ color:0x120c04, emissive:th.sphere, emissiveIntensity:1.5, roughness:0.35, metalness:0.5 })
+  );
+  group.add(core);
+  const glow = new THREE.Mesh(
+    new THREE.SphereGeometry(2.5, 32, 32),
+    new THREE.MeshBasicMaterial({ color:th.sphere, transparent:true, opacity:0.11, blending:THREE.AdditiveBlending, depthWrite:false })
+  );
+  group.add(glow);
+  const coreLight = new THREE.PointLight(th.sphere, 150, 40, 2);
+  group.add(coreLight);
+
+  /* key fobs */
+  const N = 46;
+  const bodyGeo = new THREE.BoxGeometry(0.34, 0.88, 0.085);
+  const ringGeo = new THREE.TorusGeometry(0.1, 0.028, 10, 22);
+  const keys = [];
+  for(let i=0;i<N;i++){
+    const key = new THREE.Group();
+    const body = new THREE.Mesh(bodyGeo, i % 4 === 0 ? matPearl : matGold);
+    const ring = new THREE.Mesh(ringGeo, matGold);
+    ring.position.y = 0.54;
+    key.add(body, ring);
+    group.add(key);
+    keys.push({
+      obj:key,
+      a:(i/N)*TAU,
+      r:rand(3.1, 7.4),
+      sp:rand(0.10, 0.26) * (i % 2 ? 1 : -1),
+      yAmp:rand(0.7, 2.4),
+      yPh:rand(0, TAU),
+      spin:new V(rand(-0.6,0.6), rand(-0.9,0.9), rand(-0.5,0.5)),
+      push:new V(),
+      grid:null
+    });
+  }
+
+  /* floor-plan grid targets (4 × 3 suites) */
+  const cols = 4, rows = 3, cw = 3.3, chh = 2.5;
+  const perCell = Math.ceil(N / (cols*rows));
+  keys.forEach((k, i) => {
+    const cell = i % (cols*rows);
+    const cx = (cell % cols - (cols-1)/2) * cw;
+    const cy = (Math.floor(cell/cols) - (rows-1)/2) * chh;
+    const w = cw*0.40, h = chh*0.36;
+    const u = ((Math.floor(i / (cols*rows)) + (i % 3) * 0.33) / Math.max(perCell,1)) % 1;
+    const per = 2*(w+h);
+    let d = u * per, x, y;
+    if(d < w){ x = -w + d; y = -h; }
+    else if(d < w + 2*h){ x = w; y = -h + (d - w); }
+    else if(d < 2*w + 2*h){ x = w - (d - w - 2*h); y = h; }
+    else { x = -w; y = h - (d - 2*w - 2*h); }
+    k.grid = new V(cx + x, cy + y, rand(-0.35, 0.35));
+  });
+
+  scene.add(new THREE.AmbientLight(0x2a1c0b, 1.0));
+  const dir = new THREE.DirectionalLight(0xFFEFC8, 1.0); dir.position.set(6,8,9); scene.add(dir);
+  const lights = pointLights(scene, th, 2, 85);
+  const motes = addMotes(scene, 260, th.sphere, 15);
+  const tmpA = new V();
+
+  return {
+    scene, camZ:17, motion:state.motion,
+    applyTheme(nth){
+      matGold.color.set(nth.sphere);
+      matPearl.color.set(nth.pearl);
+      core.material.emissive.set(nth.sphere);
+      glow.material.color.set(nth.sphere);
+      coreLight.color.set(nth.sphere);
+      motes.m.color.set(nth.sphere);
+      lights.forEach(o => o.l.color.set(nth.sphere));
+    },
+    update(dt, time){
+      const g = smooth(clamp((state.progress - 0.10) / 0.52));
+      const moving = this.motion !== false && !reduced;
+      const kf = 1 - Math.pow(1 - LERP, dt*60);
+
+      for(const k of keys){
+        const ang = k.a + time * k.sp * (moving ? 1 : 0);
+        const ox = Math.cos(ang) * k.r;
+        const oz = Math.sin(ang) * k.r * 0.55;
+        const oy = Math.sin(time * 0.5 + k.yPh) * k.yAmp;
+
+        tmpA.set(ox, oy, oz);
+        k.obj.position.lerpVectors(tmpA, k.grid, g);
+
+        repulse(k.obj.position, k.push);
+        k.push.multiplyScalar(0.90);
+        k.obj.position.add(k.push);
+
+        if(moving){
+          k.obj.rotation.x += k.spin.x * dt * (1 - g*0.85);
+          k.obj.rotation.y += k.spin.y * dt * (1 - g*0.85);
+          k.obj.rotation.z += k.spin.z * dt * (1 - g*0.85);
+        }
+        k.obj.rotation.x = lerp(k.obj.rotation.x, 0, g * 0.06);
+        k.obj.rotation.z = lerp(k.obj.rotation.z, 0, g * 0.06);
+      }
+
+      const pulse = 1 + Math.sin(time*1.6)*0.02;
+      core.scale.setScalar(pulse);
+      glow.scale.setScalar(1 + Math.sin(time*1.2)*0.05);
+      coreLight.intensity = 130 + Math.sin(time*1.9)*40;
+      group.rotation.y = lerp(group.rotation.y, Math.sin(time*0.06)*0.12 + state.mouseNdc.x*0.14 + g*0.5, kf*0.5);
+      group.rotation.x = lerp(group.rotation.x, -0.18 * g + state.mouseNdc.y*0.05, kf*0.5);
+
+      if(moving){
+        shimmer(lights, time);
+        const arr = motes.pts.geometry.attributes.position.array;
+        for(let i=0;i<motes.spd.length;i++){
+          arr[i*3+1] += motes.spd[i]*dt*0.5;
+          if(arr[i*3+1] > 10) arr[i*3+1] = -10;
+        }
+        motes.pts.geometry.attributes.position.needsUpdate = true;
+      }
+    }
+  };
+};
+
+/* ------------------------------------------------------------
+   DINING — lathe wine glasses that clink, then set the table
+   ------------------------------------------------------------ */
+SCENES.dining = function(th){
+  const scene = new THREE.Scene();
+  const group = new THREE.Group(); scene.add(group);
+
+  const profile = [
+    [0.004,0],[0.30,0],[0.335,0.03],[0.30,0.062],[0.085,0.10],
+    [0.062,0.17],[0.055,0.70],[0.10,0.80],[0.19,0.95],
+    [0.31,1.16],[0.385,1.38],[0.415,1.52],[0.408,1.565],[0.386,1.575]
+  ].map(p => new THREE.Vector2(p[0], p[1]));
+  const glassGeo = new THREE.LatheGeometry(profile, 40);
+  const glassMat = new THREE.MeshPhysicalMaterial({
+    color:0xffffff, metalness:0.0, roughness:0.035, transparent:true, opacity:0.30,
+    ior:1.5, clearcoat:1.0, clearcoatRoughness:0.02, side:THREE.DoubleSide, envMapIntensity:2.6
+  });
+
+  const redMat  = new THREE.MeshPhysicalMaterial({ color:0x6d0f1c, roughness:0.12, metalness:0.1, clearcoat:1, transparent:true, opacity:0.94, envMapIntensity:1.4 });
+  const champMat= new THREE.MeshPhysicalMaterial({ color:0xE8C877, roughness:0.10, metalness:0.2, clearcoat:1, transparent:true, opacity:0.9, envMapIntensity:1.6 });
+  const dropGeo = new THREE.SphereGeometry(0.085, 16, 16);
+
+  const N = 22;
+  const glasses = [];
+  for(let i=0;i<N;i++){
+    const g = new THREE.Group();
+    const shell = new THREE.Mesh(glassGeo, glassMat);
+    g.add(shell);
+    const liquid = new THREE.Group();
+    const isRed = i % 3 !== 0;
+    for(let j=0;j<9;j++){
+      const d = new THREE.Mesh(dropGeo, isRed ? redMat : champMat);
+      const a = rand(0, TAU), rr = Math.sqrt(Math.random()) * 0.26;
+      d.position.set(Math.cos(a)*rr, rand(0.95, 1.34), Math.sin(a)*rr);
+      d.scale.setScalar(rand(0.75, 1.35));
+      liquid.add(d);
+    }
+    g.add(liquid);
+    g.position.set(rand(-7,7), rand(-4,4), rand(-3,3));
+    group.add(g);
+    glasses.push({
+      obj:g,
+      vel:new V(rand(-0.6,0.6), rand(-0.3,0.3), rand(-0.3,0.3)),
+      spin:new V(rand(-0.5,0.5), rand(-0.6,0.6), rand(-0.5,0.5)),
+      a:(i/N)*TAU, r:rand(2.6, 6.4), sp:rand(0.12,0.3)*(i%2?1:-1),
+      yPh:rand(0,TAU), liquid, table:null, cool:0
+    });
+  }
+
+  /* dining table silhouette — long rounded table seen from above */
+  glasses.forEach((g, i) => {
+    const u = (i / N) * TAU;
+    const a = 7.0, b = 2.5;
+    const edge = (i % 2 === 0) ? 1 : -1;
+    g.table = new V(Math.cos(u)*a*edge*0.98, Math.sin(u)*b*edge, (i % 4 === 0 ? 0.9 : -0.9));
+  });
+
+  scene.add(new THREE.AmbientLight(0x30220f, 1.15));
+  const dir = new THREE.DirectionalLight(0xFFF2D8, 1.1); dir.position.set(4,10,8); scene.add(dir);
+  const lights = pointLights(scene, th, 3, 95);
+  const motes = addMotes(scene, 220, 0xFFE9B8, 14);
+
+  const tmpA = new V(), tmpB = new V();
+
+  return {
+    scene, camZ:15, motion:state.motion,
+    applyTheme(nth){
+      lights.forEach((o,i)=> o.l.color.set(i % 3 === 1 ? nth.pearl : nth.sphere));
+      champMat.color.set(nth.pearl);
+    },
+    update(dt, time){
+      const g = smooth(clamp((state.progress - 0.08) / 0.55));
+      const moving = this.motion !== false && !reduced;
+
+      for(let i=0;i<N;i++){
+        const G = glasses[i], o = G.obj;
+
+        if(moving && g < 0.98){
+          // swirl: tangential drift + gentle centering — glasses tumble and clink
+          const ang = G.a + time * G.sp;
+          tmpA.set(Math.cos(ang)*G.r, Math.sin(time*0.6 + G.yPh)*1.6, Math.sin(ang)*G.r*0.5);
+          tmpB.subVectors(tmpA, o.position).multiplyScalar(0.55);
+          G.vel.addScaledVector(tmpB, dt);
+          G.vel.multiplyScalar(0.985);
+          o.position.addScaledVector(G.vel, dt);
+
+          o.rotation.x += G.spin.x * dt * (1-g);
+          o.rotation.y += G.spin.y * dt * (1-g);
+          o.rotation.z += G.spin.z * dt * (1-g);
+        }
+
+        // table formation
+        const t = G.table;
+        o.position.x = lerp(o.position.x, t.x, g * 0.09);
+        o.position.y = lerp(o.position.y, t.y, g * 0.09);
+        o.position.z = lerp(o.position.z, t.z, g * 0.09);
+        o.rotation.x = lerp(o.rotation.x, -0.35, g * 0.05);
+        o.rotation.z = lerp(o.rotation.z, 0, g * 0.05);
+        o.rotation.y = lerp(o.rotation.y, Math.atan2(t.x, t.z) * 0.2, g * 0.04);
+
+        // liquid settles level as the glass stands up
+        const tilt = clamp(Math.abs(o.rotation.x) + Math.abs(o.rotation.z), 0, 1.6);
+        G.liquid.rotation.set(-o.rotation.x * (1 - g*0.9), 0, -o.rotation.z * (1 - g*0.9));
+        G.liquid.position.y = -0.12 * tilt * g;
+      }
+
+      // collisions → clink
+      G0:
+      for(let i=0;i<N;i++){
+        const A = glasses[i];
+        A.cool = Math.max(0, A.cool - dt);
+        for(let j=i+1;j<N;j++){
+          const B = glasses[j];
+          const dx = A.obj.position.x - B.obj.position.x;
+          const dy = A.obj.position.y - B.obj.position.y;
+          const dz = A.obj.position.z - B.obj.position.z;
+          const d2 = dx*dx + dy*dy + dz*dz;
+          const R = 0.92;
+          if(d2 < R*R && d2 > 0.0001){
+            const d = Math.sqrt(d2);
+            const nx = dx/d, ny = dy/d, nz = dz/d;
+            const overlap = (R - d) * 0.5;
+            A.obj.position.x += nx*overlap; A.obj.position.y += ny*overlap; A.obj.position.z += nz*overlap;
+            B.obj.position.x -= nx*overlap; B.obj.position.y -= ny*overlap; B.obj.position.z -= nz*overlap;
+            const rel = A.vel.clone().sub(B.vel).dot(new V(nx,ny,nz));
+            if(rel < 0){
+              const imp = -rel * 0.62;
+              A.vel.addScaledVector(new V(nx,ny,nz), imp);
+              B.vel.addScaledVector(new V(nx,ny,nz), -imp);
+              A.spin.x += rand(-0.6,0.6); A.spin.z += rand(-0.6,0.6);
+              B.spin.x += rand(-0.6,0.6); B.spin.z += rand(-0.6,0.6);
+              if(imp > 0.22 && A.cool === 0){ A.cool = 0.35; Audio.clink(clamp(imp*0.5, 0.05, 0.3)); }
+            }
+          }
+        }
+      }
+
+      if(moving){
+        shimmer(lights, time);
+        group.rotation.y = lerp(group.rotation.y, Math.sin(time*0.05)*0.14 + state.mouseNdc.x*0.16, 0.03);
+        const arr = motes.pts.geometry.attributes.position.array;
+        for(let i=0;i<motes.spd.length;i++){
+          arr[i*3+1] += motes.spd[i]*dt*0.42;
+          if(arr[i*3+1] > 9) arr[i*3+1] = -9;
+        }
+        motes.pts.geometry.attributes.position.needsUpdate = true;
+      }
+    }
+  };
+};
+
+/* ------------------------------------------------------------
+   SPA — iridescent toroid spheres drifting like steam
+   ------------------------------------------------------------ */
+SCENES.spa = function(th){
+  const scene = new THREE.Scene();
+  const group = new THREE.Group(); scene.add(group);
+
+  const N = 72;
+  const tints = [0xdfe7ff, 0xffe9f2, 0xe8fff6, 0xfff3dd, 0xeef0ff];
+  const mats = tints.map(c => iridMat(th, { sheenColor:new THREE.Color(c) }));
+  const torusGeo = new THREE.TorusGeometry(0.42, 0.135, 18, 40);
+  const sphereGeo = new THREE.SphereGeometry(0.30, 30, 30);
+
+  const wisps = [];
+  for(let i=0;i<N;i++){
+    const isTorus = i % 3 !== 0;
+    const m = new THREE.Mesh(isTorus ? torusGeo : sphereGeo, mats[i % mats.length]);
+    m.position.set(rand(-9,9), rand(-9,9), rand(-4,4));
+    m.rotation.set(rand(0,TAU), rand(0,TAU), rand(0,TAU));
+    const s = rand(0.65, 1.5);
+    m.scale.setScalar(s);
+    group.add(m);
+    wisps.push({
+      m,
+      rise: rand(0.22, 0.72),
+      ph: rand(0, TAU),
+      amp: rand(0.25, 0.95),
+      spin: new V(rand(-0.25,0.25), rand(-0.3,0.3), rand(-0.2,0.2)),
+      ring: new V(Math.cos((i/N)*TAU*3) * (4.6 + (i%5)*0.55), Math.sin((i/N)*TAU*2) * 2.1, ((i%7)-3)*0.35),
+      vel: new V()
+    });
+  }
+
+  scene.add(new THREE.AmbientLight(0x39414f, 1.5));
+  const dir = new THREE.DirectionalLight(0xFFFFFF, 0.9); dir.position.set(-6,7,8); scene.add(dir);
+  const rim = new THREE.PointLight(th.pearl, 90, 40, 2); rim.position.set(-6, 3, 6); scene.add(rim);
+  const warm = new THREE.PointLight(th.sphere, 70, 40, 2); warm.position.set(6, -3, 5); scene.add(warm);
+  const motes = addMotes(scene, 240, 0xffffff, 16);
+  motes.m.opacity = 0.5;
+
+  const tgt = new V();
+
+  return {
+    scene, camZ:16, motion:state.motion,
+    applyTheme(nth){
+      rim.color.set(nth.pearl);
+      warm.color.set(nth.sphere);
+    },
+    update(dt, time){
+      const g = smooth(clamp((state.progress - 0.08) / 0.55));
+      const moving = this.motion !== false && !reduced;
+
+      // thin-film interference: cycle the iridescent film thickness
+      mats.forEach((m, i) => {
+        const t0 = time * 0.22 + i * 1.3;
+        m.iridescenceThicknessRange[0] = 120 + (Math.sin(t0) * 0.5 + 0.5) * 420;
+        m.iridescenceThicknessRange[1] = 520 + (Math.cos(t0 * 0.7) * 0.5 + 0.5) * 520;
+        m.sheenColor.setHSL((0.58 + Math.sin(t0 * 0.35 + i) * 0.12 + 1) % 1, 0.35, 0.82);
+      });
+
+      for(const w of wisps){
+        const p = w.m.position;
+        if(moving){
+          p.y += w.rise * dt * (1 - g*0.75);
+          if(p.y > 9.5){ p.y = -9.5; p.x = rand(-9,9); p.z = rand(-4,4); }
+          p.x += Math.sin(time*0.4 + w.ph) * w.amp * dt * 0.5;
+          p.z += Math.cos(time*0.31 + w.ph) * w.amp * dt * 0.3;
+          attract(p, w.vel, 0.016);          // cursor pulls the steam gently
+          w.vel.multiplyScalar(0.94);
+          p.addScaledVector(w.vel, dt * 6);
+          w.m.rotation.x += w.spin.x * dt;
+          w.m.rotation.y += w.spin.y * dt;
+          w.m.rotation.z += w.spin.z * dt;
+        }
+        tgt.copy(w.ring);
+        p.lerp(tgt, g * 0.02);
+      }
+
+      if(moving){
+        group.rotation.y = lerp(group.rotation.y, Math.sin(time*0.04)*0.2 + state.mouseNdc.x*0.18, 0.02);
+        const arr = motes.pts.geometry.attributes.position.array;
+        for(let i=0;i<motes.spd.length;i++){
+          arr[i*3+1] += motes.spd[i]*dt*0.35;
+          if(arr[i*3+1] > 10) arr[i*3+1] = -10;
+        }
+        motes.pts.geometry.attributes.position.needsUpdate = true;
+      }
+    }
+  };
+};
+
+/* ------------------------------------------------------------
+   EVENTS — ballroom chandelier that lifts with the scroll
+   ------------------------------------------------------------ */
+SCENES.events = function(th){
+  const scene = new THREE.Scene();
+  const group = new THREE.Group(); scene.add(group);
+  const N = 120;
+  const matGold = goldMat(th), matPearl = pearlMat(th);
+  const geos = [new THREE.SphereGeometry(0.30,28,28), new THREE.SphereGeometry(0.20,22,22), new THREE.SphereGeometry(0.13,18,18)];
+  const balls = [];
+  const tiers = [ {y:3.9,r:5.6,n:52}, {y:1.9,r:4.4,n:40}, {y:0.0,r:3.0,n:28} ];
+  let idx = 0;
+  tiers.forEach((tier, ti) => {
+    for(let i=0;i<tier.n && idx<N;i++, idx++){
+      const a = (i/tier.n)*TAU + ti*0.4;
+      const m = new THREE.Mesh(geos[idx % 3], idx % 6 === 0 ? matPearl : matGold);
+      m.position.set(Math.cos(a)*tier.r, tier.y + Math.sin(i*1.7)*0.22, Math.sin(a)*tier.r*0.42);
+      group.add(m);
+      balls.push({ m, a, r:tier.r, y:tier.y, ti, f:rand(0,TAU), off:new V() });
+    }
+  });
+
+  scene.add(new THREE.AmbientLight(0x2e2010, 1.2));
+  const dir = new THREE.DirectionalLight(0xFFF0D2, 1.05); dir.position.set(3,10,6); scene.add(dir);
+  const lights = pointLights(scene, th, 4, 95);
+  const motes = addMotes(scene, 520, th.sphere, 20);
+  const tmp = new V();
+
+  return {
+    scene, camZ:20, motion:state.motion,
+    applyTheme(nth){
+      matGold.color.set(nth.sphere); matPearl.color.set(nth.pearl);
+      motes.m.color.set(nth.sphere);
+      lights.forEach((o,i)=> o.l.color.set(i%2 ? nth.pearl : nth.sphere));
+    },
+    update(dt, time){
+      const g = state.progress;
+      const moving = this.motion !== false && !reduced;
+      const kf = 1 - Math.pow(1 - LERP, dt*60);
+      for(let i=0;i<balls.length;i++){
+        const b = balls[i];
+        const a = b.a + (moving ? time * (0.05 + b.ti*0.03) * (b.ti%2?-1:1) : 0) + g*1.4;
+        const rad = b.r * (1 + g*0.55);
+        tmp.set(Math.cos(a)*rad, b.y + g*4.2 + (moving?Math.sin(time*0.6+b.f)*0.18:0), Math.sin(a)*rad*0.42);
+        repulse(tmp, b.off);
+        b.off.multiplyScalar(0.9);
+        tmp.add(b.off);
+        b.m.position.lerp(tmp, kf*0.9);
+      }
+      if(moving){
+        shimmer(lights, time);
+        group.rotation.y = lerp(group.rotation.y, Math.sin(time*0.05)*0.18 + g*0.8, 0.03);
+        const arr = motes.pts.geometry.attributes.position.array;
+        for(let i=0;i<motes.spd.length;i++){
+          arr[i*3+1] += motes.spd[i]*dt*(0.5 + g);
+          if(arr[i*3+1] > 11) arr[i*3+1] = -11;
+        }
+        motes.pts.geometry.attributes.position.needsUpdate = true;
+      }
+    }
+  };
+};
+
+/* ------------------------------------------------------------
+   CONTACT — gold beacon over a field of light
+   ------------------------------------------------------------ */
+SCENES.contact = function(th){
+  const scene = new THREE.Scene();
+  const group = new THREE.Group(); scene.add(group);
+
+  const knotMat = goldMat(th, { metalness:1.0, roughness:0.13 });
+  const knot = new THREE.Mesh(new THREE.TorusKnotGeometry(3.1, 0.40, 260, 40, 2, 3), knotMat);
+  group.add(knot);
+
+  const core = new THREE.Mesh(
+    new THREE.SphereGeometry(1.05, 40, 40),
+    new THREE.MeshStandardMaterial({ color:0x100b04, emissive:th.sphere, emissiveIntensity:1.3, roughness:0.3, metalness:0.6 })
+  );
+  group.add(core);
+  const coreLight = new THREE.PointLight(th.sphere, 170, 44, 2);
+  group.add(coreLight);
+
+  const ringMat = pearlMat(th);
+  const ringGeo = new THREE.TorusGeometry(0.13, 0.035, 10, 20);
+  const orbits = [];
+  for(let i=0;i<44;i++){
+    const m = new THREE.Mesh(ringGeo, ringMat);
+    group.add(m);
+    orbits.push({ m, a:(i/44)*TAU, r:rand(4.2, 8.2), y:rand(-3,3), sp:rand(0.08,0.26)*(i%2?1:-1), tilt:rand(0,TAU) });
+  }
+
+  scene.add(new THREE.AmbientLight(0x2b1d0c, 1.1));
+  const dir = new THREE.DirectionalLight(0xFFF1D6, 1.0); dir.position.set(-5,8,7); scene.add(dir);
+  const lights = pointLights(scene, th, 2, 80);
+  const motes = addMotes(scene, 420, th.sphere, 18);
+
+  return {
+    scene, camZ:19, motion:state.motion,
+    applyTheme(nth){
+      knotMat.color.set(nth.sphere);
+      ringMat.color.set(nth.pearl);
+      core.material.emissive.set(nth.sphere);
+      coreLight.color.set(nth.sphere);
+      motes.m.color.set(nth.sphere);
+      lights.forEach(o => o.l.color.set(nth.sphere));
+    },
+    update(dt, time){
+      const g = state.progress;
+      const moving = this.motion !== false && !reduced;
+      if(moving){
+        knot.rotation.y += dt * (0.16 + g*0.5);
+        knot.rotation.x += dt * (0.07 + g*0.18);
+        core.rotation.y -= dt * 0.1;
+        coreLight.intensity = 150 + Math.sin(time*1.8)*45;
+        for(const o of orbits){
+          const a = o.a + time * o.sp;
+          o.m.position.set(Math.cos(a)*o.r, o.y + Math.sin(time*0.5 + o.tilt)*0.5, Math.sin(a)*o.r*0.5);
+          o.m.rotation.set(time*0.6 + o.tilt, a, 0);
+        }
+        shimmer(lights, time);
+        const arr = motes.pts.geometry.attributes.position.array;
+        for(let i=0;i<motes.spd.length;i++){
+          arr[i*3+1] += motes.spd[i]*dt*(0.45 + g*0.8);
+          if(arr[i*3+1] > 10) arr[i*3+1] = -10;
+        }
+        motes.pts.geometry.attributes.position.needsUpdate = true;
+        group.rotation.y = lerp(group.rotation.y, Math.sin(time*0.04)*0.15 + state.mouseNdc.x*0.16, 0.03);
+      }
+    }
+  };
+};
+
+/* ============================================================
+   12 · LOADER
+   ============================================================ */
+const STEPS = [
+  'Preparing your suite…',
+  'Warming the lights…',
+  'Chilling the champagne…',
+  'Your stay awaits.'
+];
+function runLoader(){
+  const bar = $('#loaderBar'), step = $('#loaderStep'), pct = $('#loaderPct');
+  let v = 0, i = 0;
+  const t = setInterval(()=>{
+    v = Math.min(100, v + rand(2.2, 7.5));
+    bar.style.width = v.toFixed(1) + '%';
+    pct.textContent = Math.round(v) + '%';
+    const ni = Math.min(STEPS.length - 1, Math.floor(v / 26));
+    if(ni !== i){
+      i = ni;
+      step.style.opacity = '0';
+      setTimeout(()=>{ step.textContent = STEPS[i]; step.style.opacity = '1'; }, 180);
+    }
+    if(v >= 100){
+      clearInterval(t);
+      setTimeout(()=>{
+        $('#loader').classList.add('done');
+        document.body.classList.remove('is-loading');
+        state.ready = true;
+      }, 420);
+    }
+  }, 92);
+}
+
+/* ============================================================
+   13 · BOOT
+   ============================================================ */
+/* scroll-driven ambience when WebGL is unavailable */
+function flatLoop(){
+  const step = ()=>{
+    const docH = Math.max(document.body.scrollHeight - window.innerHeight, 1);
+    const target = clamp(window.scrollY / docH);
+    state.progress = lerp(state.progress, target, LERP);
+    morphBackground(state.progress);
+    requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+function boot(){
+  if(!location.hash) history.replaceState(null, '', '#/');
+
+  buildLangMenu();
+  buildNav();
+  buildFooter();
+  buildThemes();
+  applyI18nStatic();
+  bindChrome();
+  setTheme(state.theme);
+
+  const webgl = engine.init();
+  if(!webgl){
+    document.documentElement.classList.add('no-webgl');
+    $('#scene').style.display = 'none';
+    flatLoop();   // keep scroll-driven colour morphing alive without WebGL
+  }
+
+  const h = location.hash.replace(/^#/, '');
+  render(h.startsWith('/') ? h.split('?')[0] : '/');
+  runLoader();
+}
+
+window.addEventListener('hashchange', ()=>{
+  const h = location.hash.replace(/^#/, '');
+  if(h && !h.startsWith('/')){
+    const el = document.getElementById(h);
+    if(el){ el.scrollIntoView({ behavior:'smooth', block:'start' }); return; }
+  }
+  render(h.startsWith('/') ? h.split('?')[0] : '/');
+});
+
+if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+else boot();
+
+/* keep the pointer world position fresh even before the first frame */
+window.addEventListener('pointermove', ()=>{ state.ready = true; }, { once:true });
+</script>
+</body>
+</html>
